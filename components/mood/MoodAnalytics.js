@@ -5,7 +5,7 @@ import { auth, database } from '../../firebase';
 import { ref, get } from 'firebase/database';
 import { theme } from '../../themes';
 import { MOOD_TYPES } from '../../utils/moodTypes';
-import SpeedometerChart from 'react-native-speedometer-chart';
+import Speedometer from '../common/Speedometer';
 import { getMoodCategoryCount } from '../../utils/moodAnalytics';
 
 const getLevel = (value) => {
@@ -258,14 +258,28 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
       <View style={styles.riskContainer}>
         <Text style={styles.riskTitle}>Depression Risk Assessment</Text>
         <View style={styles.riskWrapper}>
-          <SpeedometerChart 
+          <Speedometer 
             value={Math.round(depressionRisk)}
-            totalValue={100}
+            maxValue={100}
             size={200}
-            showIndicator
-            outerColor="#FFF8DC" // Cornsilk
-            internalColor={getRiskColor(depressionRisk)}
-            showLabels
+            outerCircleStyle={{ backgroundColor: "#FFF8DC" }} 
+            labels={[
+              {
+                name: "Low",
+                labelColor: "#FFD700",
+                activeBarColor: "#FFD700"
+              },
+              {
+                name: "Moderate",
+                labelColor: "#FFA500",
+                activeBarColor: "#FFA500"
+              },
+              {
+                name: "High",
+                labelColor: "#FF0000",
+                activeBarColor: "#FF0000"
+              }
+            ]}
             labelStyle={{
               color: theme.colors.text,
               fontSize: 14,
@@ -274,7 +288,7 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
             }}
           />
           <Text style={[styles.riskValue, { color: getRiskColor(depressionRisk) }]}>
-            {Math.round(depressionRisk)}% - {getLevel(depressionRisk)}
+            {Math.round(depressionRisk)}%
           </Text>
         </View>
       </View>
@@ -426,7 +440,7 @@ const styles = StyleSheet.create({
   riskValue: {
     fontSize: 24,
     fontFamily: theme.fonts.bold,
-    marginTop: -3,
+    marginTop: 10,
     textAlign: 'center',
   },
   legendContainer: {

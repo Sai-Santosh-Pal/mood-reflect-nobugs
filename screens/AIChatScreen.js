@@ -183,6 +183,7 @@ export default function AIChatScreen() {
         throw new Error('Chat initialization failed');
       }
 
+      // Call the Gemini chat's sendMessage method
       const result = await chatRef.current.sendMessage(userMessage.text);
       const responseText = result.response.text();
       
