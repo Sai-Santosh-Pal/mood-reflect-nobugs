@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "Mood Reflect",
+    "slug": "moodreflect",
+    "android": {
+      "package": "com.moodreflectors.moodreflect"
+    }
+  }
+}
