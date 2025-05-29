@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 52,
     marginBottom: 10,
     paddingHorizontal: theme.spacing.md,
   },

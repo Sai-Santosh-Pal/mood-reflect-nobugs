@@ -367,7 +367,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: theme.fonts.regular,
     marginLeft: 20,
-    marginBottom: -20,
   },
   sosButton: {
     backgroundColor: "#FFD700",

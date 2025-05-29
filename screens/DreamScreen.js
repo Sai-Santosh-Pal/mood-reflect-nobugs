@@ -108,13 +108,50 @@ export default function DreamScreen() {
     }
   };
 
+  const handleDeleteDream = (dreamId) => {
+    Alert.alert(
+      'Delete Dream',
+      'Are you sure you want to delete this dream?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const dreamRef = ref(database, `users/${auth.currentUser.uid}/dreams/${dreamId}`);
+              await remove(dreamRef);
+              setDreams((prev) => prev.filter((d) => d.id !== dreamId));
+              Alert.alert('Success', 'Dream deleted successfully');
+            } catch (error) {
+              console.error('Error deleting dream:', error);
+              Alert.alert('Error', 'Failed to delete dream');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const renderDream = ({ item }) => (
     <Card style={styles.dreamCard}>
-      {item.imageUrl && (
-        <Image source={{ uri: item.imageUrl }} style={styles.dreamImage} />
-      )}
+      <View style={{ position: 'relative' }}>
+        {item.imageUrl && (
+          <Image source={{ uri: item.imageUrl }} style={styles.dreamImage} />
+        )}
+        <TouchableOpacity
+          onPress={() => handleDeleteDream(item.id)}
+          style={styles.deleteButton}
+          activeOpacity={0.7}
+        >
+          <MaterialIcons name="delete" size={20} color={theme.colors.error} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.dreamContent}>
-        <Text style={styles.dreamTitle}>{item.title}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.dreamTitle}>{item.title}</Text>
+        </View>
+        <View style={styles.divider} />
         <Text style={styles.dreamType}>{item.type}</Text>
         <Text style={styles.dreamDescription}>{item.description}</Text>
         <Text style={styles.timestamp}>
@@ -205,21 +242,57 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   dreamCard: {
-    margin: theme.spacing.sm,
+    margin: theme.spacing.md,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 0,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.10,
+    shadowRadius: 6,
+    elevation: 4,
   },
   dreamImage: {
     width: '100%',
-    height: 200,
-    borderRadius: theme.borderRadius.md,
+    height: 180,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  deleteButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 2,
   },
   dreamContent: {
-    padding: theme.spacing.md,
+    padding: theme.spacing.lg,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
   },
   dreamTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: theme.fonts.bold,
-    marginBottom: -10,
-    // marginBottom: theme.spacing.xs,
+    color: theme.colors.text,
+    flex: 1,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#FFF9E5',
+    marginVertical: 10,
+    borderRadius: 1,
   },
   dreamType: {
     fontSize: 14,

@@ -416,6 +416,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.card,
     borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.md,
+    marginTop: 36,
     // marginBottom: theme.spacing.md,
     shadowColor: theme.colors.shadow,
     shadowOffset: {
@@ -440,8 +441,9 @@ const styles = StyleSheet.create({
   riskValue: {
     fontSize: 24,
     fontFamily: theme.fonts.bold,
-    marginTop: 10,
+    marginTop: 16,
     textAlign: 'center',
+    marginBottom: 24,
   },
   legendContainer: {
     flexDirection: 'row',

@@ -28,7 +28,7 @@ export default function InfoSection({ title, items }) {
 
 const styles = StyleSheet.create({
   section: {
-    marginTop: (theme.spacing.lg - 10),
+    marginTop: theme.spacing.lg,
     marginBottom: 10,
 },
 sectionTitle: {

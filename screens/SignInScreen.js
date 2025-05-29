@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Image, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Image, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { theme } from '../themes';
@@ -28,7 +28,7 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/icon.png')} style={styles.logo} />
+      {/* <Image source={require('../assets/icon.png')} style={styles.logo} /> */}
       <Text style={styles.title}>Sign In</Text>
       <TextInput
         style={styles.input}
@@ -45,17 +45,19 @@ export default function SignInScreen({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <View style={styles.buttonContainer}>
-        <Button 
-          title={loading ? "Please wait..." : "Sign In"} 
-          onPress={signIn}
-          disabled={loading}
-        />
-      </View>
-      <Button
-        title="Don't have an account? Sign Up"
+      <TouchableOpacity
+        style={[styles.signInButton, loading && styles.signInButtonDisabled]}
+        onPress={signIn}
+        disabled={loading}
+      >
+        <Text style={styles.signInButtonText}>{loading ? 'Please wait...' : 'Sign In'}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.secondaryButton}
         onPress={() => navigation.navigate('SignUp')}
-      />
+      >
+        <Text style={styles.secondaryButtonText}>Don't have an account? Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -91,5 +93,47 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     marginBottom: 15,
+  },
+  secondaryButton: {
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+  },
+  secondaryButtonText: {
+    color: theme.colors.primary,
+    fontSize: 13,
+    fontFamily: theme.fonts.medium,
+    letterSpacing: 0.2,
+  },
+  signInButton: {
+    width: '100%',
+    backgroundColor: theme.colors.primary,
+    paddingVertical: 14,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.10,
+    shadowRadius: 4,
+  },
+  signInButtonDisabled: {
+    opacity: 0.6,
+  },
+  signInButtonText: {
+    color: theme.colors.card,
+    fontSize: 16,
+    fontFamily: theme.fonts.bold,
+    letterSpacing: 0.2,
   },
 }); 

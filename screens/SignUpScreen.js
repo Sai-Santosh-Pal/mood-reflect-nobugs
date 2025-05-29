@@ -1,9 +1,10 @@
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
 import { useState } from 'react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import AuthInput from '../components/auth/AuthInput';
 import AuthButton from '../components/auth/AuthButton';
+import { theme } from '../themes';
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -29,6 +30,7 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Create Account</Text>
       <AuthInput
         placeholder="Email"
         value={email}
@@ -42,16 +44,19 @@ export default function SignUpScreen({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <AuthButton 
-        title="Create Account" 
+      <TouchableOpacity
+        style={[styles.signUpButton, loading && styles.signUpButtonDisabled]}
         onPress={handleSignUp}
-        loading={loading}
-      />
-      <AuthButton
-        title="Already have an account? Sign In"
-        onPress={() => navigation.navigate('SignIn')}
+        disabled={loading}
+      >
+        <Text style={styles.signUpButtonText}>{loading ? 'Please wait...' : 'Create Account'}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
         style={styles.secondaryButton}
-      />
+        onPress={() => navigation.navigate('SignIn')}
+      >
+        <Text style={styles.secondaryButtonText}>Already have an account? Sign In</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -64,7 +69,51 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   secondaryButton: {
-    backgroundColor: '#8E8E93',
-    marginTop: 10,
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: '#FEBE00',
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+  },
+  secondaryButtonText: {
+    color: '#FEBE00',
+    fontSize: 13,
+    fontFamily: theme.fonts.medium,
+    letterSpacing: 0.2,
+  },
+  signUpButton: {
+    width: '100%',
+    backgroundColor: '#FEBE00',
+    paddingVertical: 14,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.10,
+    shadowRadius: 4,
+  },
+  signUpButtonDisabled: {
+    opacity: 0.6,
+  },
+  signUpButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: theme.fonts.bold,
+    letterSpacing: 0.2,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontFamily: theme.fonts.bold,
+    textAlign: 'center',
   },
 }); 
