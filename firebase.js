@@ -31,17 +31,19 @@ const databaseRules = {
   "rules": {
     "moods": {
       "$uid": {
-        // Allow read/write only if the user is authenticated and it's their own data
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid"
       }
     },
     "users": {
       "$uid": {
-        // Allow read/write only if the user is authenticated and it's their own data
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid"
       }
+    },
+    "posts": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
   }
 }
