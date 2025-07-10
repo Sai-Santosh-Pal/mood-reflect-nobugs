@@ -5,14 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBhrSR1YWwvdWiKtp2CovqBshmfoOCcaHE",
-  authDomain: "mood-reflect.firebaseapp.com",
-  projectId: "mood-reflect",
-  storageBucket: "mood-reflect.firebasestorage.app",
-  messagingSenderId: "72618733137",
-  appId: "1:72618733137:web:4bb6f6668b5fc875625270",
-  measurementId: "G-Q1M3PX27HE",
-  databaseURL: "https://mood-reflect-default-rtdb.firebaseio.com"
+  apiKey: "AIzaSyBwP0WMRal1Gg7NSu7LdMwIaO5AU5a9S2c",
+  authDomain: "mood-reflect-7ede9.firebaseapp.com",
+  projectId: "mood-reflect-7ede9",
+  storageBucket: "mood-reflect-7ede9.firebasestorage.app",
+  messagingSenderId: "248662128236",
+  appId: "1:248662128236:web:a0328f12772036b87bca49",
+  measurementId: "G-0HFXQQNEBN",
+  databaseURL: "https://mood-reflect-7ede9-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase

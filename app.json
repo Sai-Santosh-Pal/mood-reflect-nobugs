@@ -4,6 +4,30 @@
     "slug": "moodreflect",
     "android": {
       "package": "com.moodreflectors.moodreflect"
-    }
+    },
+    "assetBundlePatterns": [
+      "assets/**/*",
+      "fonts/**/*"
+    ],
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9995eea9-ee92-45f7-8075-9637fb69de6b"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ]
+    ]
   }
 }
