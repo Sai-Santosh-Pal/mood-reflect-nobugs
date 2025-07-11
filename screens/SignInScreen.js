@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: theme.colors.card,
+    backgroundColor: theme.colors.card, // Use theme card color
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   signInButtonText: {
-    color: theme.colors.card,
+    color: theme.colors.buttonText, // Use theme button text color (white)
     fontSize: 16,
     fontFamily: theme.fonts.bold,
     letterSpacing: 0.2,

@@ -1,16 +1,18 @@
 export const baseTheme = {
   colors: {
-    primary: "#FEBE00",
-    secondary: "#FEBE00",
-    background: "#f5f5f5",
-    card: "#fff",
-    text: "#000000",
-    textSecondary: "#000000",
+    primary: "#949aff", // New button and accent color
+    secondary: "#E6EAFE", // Soft purple (cards, containers)
+    background: "#FFFFFF", // White background
+    card: "#E6EAFE", // Soft purple for cards/containers
+    text: "#2C3176", // Deep blue for main text
+    textSecondary: "#B0B6D9", // Muted blue for secondary text
     success: "#4CAF50",
     error: "#FF3B30",
     warning: "#FFC107",
-    inactive: "#8E8E93",
-    border: "#FEBE00",
+    inactive: "#B0B6D9", // Muted blue for inactive elements
+    border: "#949aff", // Darker violet for borders
+    shadow: "#E6EAFE", // Soft blue/gray for shadows
+    buttonText: "#FFFFFF", // White text for buttons
   },
   spacing: {
     xs: 4,

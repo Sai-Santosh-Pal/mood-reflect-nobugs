@@ -43,7 +43,8 @@ const databaseRules = {
     },
     "posts": {
       ".read": "auth != null",
-      ".write": "auth != null"
+      ".write": "auth != null",
+      ".indexOn": "timestamp"
     }
   }
 }

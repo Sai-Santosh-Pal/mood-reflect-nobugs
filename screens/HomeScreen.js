@@ -345,11 +345,10 @@ const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 20,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.background, // White
   },
   moodInputContainer: {
-    backgroundColor: "#FEBE00",
+    backgroundColor: theme.colors.card, // Soft purple
     paddingBlock: 20,
     borderRadius: 30,
     marginTop: 50,
@@ -359,6 +358,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: theme.fonts.bold,
     marginLeft: 20,
+    color: theme.colors.text, // Deep blue
   },
   scrollView: {
     flex: 1,
@@ -367,15 +367,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: theme.fonts.regular,
     marginLeft: 20,
+    color: theme.colors.text, // Deep blue
   },
   sosButton: {
-    backgroundColor: "#FFD700",
+    backgroundColor: theme.colors.primary, // Deep purple/blue
     padding: theme.spacing.md,
     borderRadius: theme.borderRadius.lg,
     marginHorizontal: theme.spacing.md,
     marginTop: theme.spacing.md,
     alignItems: "center",
-    shadowColor: theme.colors.shadow,
+    shadowColor: theme.colors.shadow, // Soft blue/gray
     shadowOffset: {
       width: 0,
       height: 2,
@@ -387,7 +388,7 @@ const styles = StyleSheet.create({
   sosButtonText: {
     fontSize: 18,
     fontFamily: theme.fonts.bold,
-    color: "#000000",
+    color: '#FFFFFF', // White text for contrast
   },
   columnContainer: {
     flexDirection: "row",
@@ -397,13 +398,13 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    backgroundColor: "#FFD700",
+    backgroundColor: '#FFFFFF', // White columns
     padding: theme.spacing.lg,
     margin: theme.spacing.xs,
     borderRadius: theme.borderRadius.lg,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: theme.colors.shadow,
+    shadowColor: theme.colors.shadow, // Soft blue/gray
     shadowOffset: {
       width: 0,
       height: 2,
@@ -420,13 +421,13 @@ const styles = StyleSheet.create({
   columnTitle: {
     fontSize: 20,
     fontFamily: theme.fonts.bold,
-    color: "#000000",
+    color: theme.colors.text, // Deep blue
     marginBottom: theme.spacing.xs,
   },
   columnSubtext: {
     fontSize: 14,
     fontFamily: theme.fonts.medium,
-    color: "#000000",
+    color: theme.colors.textSecondary, // Muted blue
     textAlign: "center",
   },
 }); 

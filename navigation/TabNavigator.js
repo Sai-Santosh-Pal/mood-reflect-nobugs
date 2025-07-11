@@ -159,8 +159,11 @@ export default function TabNavigator() {
           }
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.textSecondary,
+        tabBarActiveTintColor: theme.colors.primary, // Purple for active tab
+        tabBarInactiveTintColor: '#000000', // Black for inactive tabs
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF', // White background for tab bar
+        },
       })}
     >
       <Tab.Screen

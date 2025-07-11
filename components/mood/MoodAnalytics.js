@@ -20,9 +20,9 @@ const cardWidth = screenWidth * 0.85;
 
 const getMoodColor = (moodType) => {
   const colors = {  
-    VERY_HAPPY: "#FFD700", // Bright Yellow
-    HAPPY: "#FEBE00", // Gold Yellow
-    NEUTRAL: "#FFA500", // Orange
+    VERY_HAPPY: theme.colors.primary, // Bright Yellow
+    HAPPY: theme.colors.primary, // Gold Yellow
+    NEUTRAL: theme.colors.secondary, // Orange
     SAD: "#FF4D4D", // Light Red
     VERY_SAD: "#FF0000", // Bright Red
   };
@@ -30,8 +30,8 @@ const getMoodColor = (moodType) => {
 };
 
 const getRiskColor = (value) => {
-  if (value <= 30) return "#FFD700";  // Gold
-  if (value <= 70) return "#FFA500";  // Goldenrod
+  if (value <= 30) return theme.colors.primary;  // Gold
+  if (value <= 70) return theme.colors.secondary;  // Goldenrod
   return "#FF0000";                   // Dark Goldenrod
 };
 
@@ -266,13 +266,13 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
             labels={[
               {
                 name: "Low",
-                labelColor: "#FFD700",
-                activeBarColor: "#FFD700"
+                labelColor: theme.colors.primary,
+                activeBarColor: theme.colors.primary
               },
               {
                 name: "Moderate",
-                labelColor: "#FFA500",
-                activeBarColor: "#FFA500"
+                labelColor: theme.colors.secondary,
+                activeBarColor: theme.colors.secondary
               },
               {
                 name: "High",

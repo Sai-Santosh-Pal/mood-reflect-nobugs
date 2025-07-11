@@ -21,7 +21,7 @@ export default function InfoCard({ title, description, imageUrl, onPress }) {
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#FFD700",
+    backgroundColor: theme.colors.card, // Soft purple from theme
     borderRadius: theme.borderRadius.lg,
     width: 250,
     shadowColor: theme.colors.shadow,
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: theme.fonts.bold,
     marginBottom: theme.spacing.xs,
-    color: "#000000",
+    color: theme.colors.text, // Changed from "#000000"
   },
   description: {
     fontSize: 14,
     fontFamily: theme.fonts.regular,
-    color: "#000000",
+    color: theme.colors.text, // Changed from "#000000"
     opacity: 0.8,
   },
 }); 

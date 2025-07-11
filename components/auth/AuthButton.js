@@ -17,14 +17,14 @@ export default function AuthButton({ title, onPress, loading = false, style }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.primary, // #949aff
     padding: theme.spacing.md,
     borderRadius: theme.borderRadius.md,
     width: "100%",
     alignItems: "center",
   },
   buttonText: {
-    color: "#000",
+    color: theme.colors.buttonText, // White text for contrast
     fontSize: 16,
     fontFamily: theme.fonts.semiBold,
   },

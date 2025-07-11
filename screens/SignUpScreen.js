@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card, // Use theme card color
   },
   secondaryButton: {
     marginTop: 8,
     borderWidth: 1,
-    borderColor: '#FEBE00',
+    borderColor: theme.colors.primary, // Use theme primary color
     borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 18,
@@ -84,14 +84,14 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   secondaryButtonText: {
-    color: '#FEBE00',
+    color: theme.colors.primary, // Use theme primary color
     fontSize: 13,
     fontFamily: theme.fonts.medium,
     letterSpacing: 0.2,
   },
   signUpButton: {
     width: '100%',
-    backgroundColor: '#FEBE00',
+    backgroundColor: theme.colors.primary, // Use theme primary color
     paddingVertical: 14,
     borderRadius: 20,
     alignItems: 'center',
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   signUpButtonText: {
-    color: '#fff',
+    color: theme.colors.buttonText, // Use theme button text color (white)
     fontSize: 16,
     fontFamily: theme.fonts.bold,
     letterSpacing: 0.2,

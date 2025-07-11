@@ -8,11 +8,11 @@ const screenWidth = Dimensions.get('window').width;
 const cardWidth = screenWidth * 0.85;
 
 const DREAM_TYPE_COLORS = {
-  "Lucid Dream": "#FFD700", // Fresh Green
-  "Vivid Dream": "#FEBE00", // Bright Blue
-  "Recurring Dream": "#FFA500", // Orange
+  "Lucid Dream": theme.colors.primary, // Fresh Green
+  "Vivid Dream": theme.colors.secondary, // Bright Blue
+  "Recurring Dream": theme.colors.card, // Orange
   Nightmare: "#FF4D4D", // Red
-  "Prophetic Dream": "#FF0000", // Orange
+  "Prophetic Dream": theme.colors.card, // Orange
 };
 
 const chartConfig = {
@@ -87,19 +87,19 @@ export default function DreamAnalytics({ dreamData }) {
         <Text style={styles.analysisTitle}>Dream Pattern Analysis</Text>
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
-            <Text style={[styles.statPercentage, { color: 'rgba(46, 204, 113, 1)' }]}>
+            <Text style={[styles.statPercentage, { color: theme.colors.primary }]}>
               {positivePercentage}%
             </Text>
             <Text style={styles.statLabel}>Positive Dreams</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={[styles.statPercentage, { color: 'rgba(241, 196, 15, 1)' }]}>
+            <Text style={[styles.statPercentage, { color: theme.colors.card }]}>
               {neutralPercentage}%
             </Text>
             <Text style={styles.statLabel}>Neutral Dreams</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={[styles.statPercentage, { color: 'rgba(231, 76, 60, 1)' }]}>
+            <Text style={[styles.statPercentage, { color: '#FF4D4D' }]}>
               {negativePercentage}%
             </Text>
             <Text style={styles.statLabel}>Negative Dreams</Text>
@@ -151,15 +151,15 @@ export default function DreamAnalytics({ dreamData }) {
             />
             <View style={styles.legendContainer}>
               <View style={styles.legendItem}>
-                <View style={[styles.legendColor, { backgroundColor: 'rgba(46, 204, 113, 1)' }]} />
+                <View style={[styles.legendColor, { backgroundColor: theme.colors.primary }]} />
                 <Text style={styles.legendText}>Positive Dreams</Text>
               </View>
               <View style={styles.legendItem}>
-                <View style={[styles.legendColor, { backgroundColor: 'rgba(241, 196, 15, 1)' }]} />
+                <View style={[styles.legendColor, { backgroundColor: theme.colors.card }]} />
                 <Text style={styles.legendText}>Neutral Dreams</Text>
               </View>
               <View style={styles.legendItem}>
-                <View style={[styles.legendColor, { backgroundColor: 'rgba(231, 76, 60, 1)' }]} />
+                <View style={[styles.legendColor, { backgroundColor: '#FF4D4D' }]} />
                 <Text style={styles.legendText}>Negative Dreams</Text>
               </View>
             </View>
