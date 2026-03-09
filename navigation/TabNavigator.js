@@ -1,7 +1,7 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, View } from 'react-native';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { View, StyleSheet, Platform } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import AnalyticsScreen from '../screens/AnalyticsScreen';
 import CommunityScreen from '../screens/CommunityScreen';
@@ -137,30 +137,69 @@ function HomeStack() {
   );
 }
 
+const TAB_ICONS = {
+  Home: 'house',
+  Dreams: 'cloud-moon',
+  Analytics: 'chart-simple',
+  Community: 'users',
+  AIChatTab: 'robot',
+  Profile: 'circle-user',
+};
+
 export default function TabNavigator() {
   return (
     <Tab.Navigator
+      tabBar={(props) => (
+        <View style={styles.tabBarWrapper}>
+          <BottomTabBar {...props} safeAreaInsets={{ bottom: 0, top: 0 }} />
+        </View>
+      )}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home";
-          } else if (route.name === "Analytics") {
-            iconName = focused ? "bar-chart" : "bar-chart";
-          } else if (route.name === "Community") {
-            iconName = focused ? "people" : "people";
-          } else if (route.name === "AI Talk") {
-            iconName = focused ? "chat" : "chat";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person" : "person";
-          } else if (route.name === "Dreams") {
-            iconName = focused ? "cloud" : "cloud";
-          }
-          return <MaterialIcons name={iconName} size={size} color={color} />;
+        tabBarIcon: ({ focused }) => {
+          const iconName = TAB_ICONS[route.name];
+          return (
+            <View style={[
+              styles.circle,
+              focused && styles.circleFocused,
+            ]}>
+              <FontAwesome6
+                name={iconName}
+                size={15}
+                color={focused ? '#fff' : '#555'}
+                solid
+              />
+            </View>
+          );
         },
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.textSecondary,
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          flex: 1,
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 0,
+          margin: 0,
+        },
+        tabBarStyle: {
+          backgroundColor: '#fff',
+          borderTopWidth: 0,
+          width: '80%',
+          maxWidth: 400,
+          height: 56,
+          minHeight: 56,
+          maxHeight: 56,
+          borderRadius: 28,
+          overflow: 'hidden',
+          flexDirection: 'row',
+          alignItems: 'stretch',
+          paddingHorizontal: 16,
+          paddingVertical: 0,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.12,
+          shadowRadius: 20,
+          elevation: 12,
+        },
       })}
     >
       <Tab.Screen
@@ -171,34 +210,54 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Dreams"
         component={DreamScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="cloud" size={size} color={color} />
-          ),
-        }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Analytics"
         component={AnalyticsStack}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Community" component={CommunityScreen} />
+      <Tab.Screen
+        name="Community"
+        component={CommunityScreen}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen
         name="AIChatTab"
         component={ChatStack}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={size}
-              color={color}
-            />
-          ),
-          tabBarLabel: "AI Talk",
+          tabBarLabel: 'AI Talk',
           headerShown: false,
         }}
       />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
-} 
+}
+
+const styles = StyleSheet.create({
+  tabBarWrapper: {
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? 28 : 14,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  circle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#ECECEC',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  circleFocused: {
+    backgroundColor: '#f2ba22',
+  },
+});

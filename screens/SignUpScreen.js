@@ -1,19 +1,32 @@
-import { View, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
 import { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { theme } from '../themes';
 import AuthInput from '../components/auth/AuthInput';
 import AuthButton from '../components/auth/AuthButton';
-import { theme } from '../themes';
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
-    if (!email.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
       Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
       return;
     }
 
@@ -29,91 +42,92 @@ export default function SignUpScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create Account</Text>
-      <AuthInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <AuthInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity
-        style={[styles.signUpButton, loading && styles.signUpButtonDisabled]}
-        onPress={handleSignUp}
-        disabled={loading}
+    <View style={styles.screen}>
+      <KeyboardAvoidingView
+        style={styles.center}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <Text style={styles.signUpButtonText}>{loading ? 'Please wait...' : 'Create Account'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.secondaryButton}
-        onPress={() => navigation.navigate('SignIn')}
-      >
-        <Text style={styles.secondaryButtonText}>Already have an account? Sign In</Text>
-      </TouchableOpacity>
+        <View style={styles.card}>
+          <Text style={styles.title}>Create account</Text>
+
+          <AuthInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            icon="mail-outline"
+          />
+          <AuthInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            icon="lock-closed-outline"
+          />
+          <AuthInput
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            icon="shield-checkmark-outline"
+          />
+
+          <AuthButton title="Create Account" onPress={handleSignUp} loading={loading} />
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignIn')}
+            style={styles.switchRow}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.switchText}>
+              Already have an account?{' '}
+              <Text style={styles.switchLink}>Sign in</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    padding: 20,
+    backgroundColor: theme.colors.primary,
+  },
+  center: {
+    flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  secondaryButton: {
-    marginTop: 8,
-    borderWidth: 1,
-    borderColor: '#FEBE00',
-    borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 18,
     alignItems: 'center',
-    alignSelf: 'center',
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
+    paddingHorizontal: 24,
   },
-  secondaryButtonText: {
-    color: '#FEBE00',
-    fontSize: 13,
-    fontFamily: theme.fonts.medium,
-    letterSpacing: 0.2,
-  },
-  signUpButton: {
+  card: {
     width: '100%',
-    backgroundColor: '#FEBE00',
-    paddingVertical: 14,
-    borderRadius: 20,
-    alignItems: 'center',
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.10,
-    shadowRadius: 4,
-  },
-  signUpButtonDisabled: {
-    opacity: 0.6,
-  },
-  signUpButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontFamily: theme.fonts.bold,
-    letterSpacing: 0.2,
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    paddingHorizontal: 28,
+    paddingTop: 36,
+    paddingBottom: 32,
+
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 28,
     fontFamily: theme.fonts.bold,
-    textAlign: 'center',
+    color: theme.colors.text,
+    marginBottom: 24,
   },
-}); 
+  switchRow: {
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  switchText: {
+    fontSize: 14,
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.inactive,
+  },
+  switchLink: {
+    color: theme.colors.primary,
+    fontFamily: theme.fonts.semiBold,
+  },
+});

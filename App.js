@@ -113,8 +113,22 @@ export default function App() {
             </>
           ) : (
             <>
-              <Stack.Screen name="SignIn" component={SignInScreen} />
-              <Stack.Screen name="SignUp" component={SignUpScreen} />
+              <Stack.Screen
+                name="SignIn"
+                component={SignInScreen}
+                options={{
+                  animation: 'fade',
+                  animationDuration: 250,
+                }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{
+                  animation: 'fade',
+                  animationDuration: 250,
+                }}
+              />
             </>
           )}
         </Stack.Navigator>
