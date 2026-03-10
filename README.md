@@ -1,7 +1,8 @@
 # Mood Reflect 🧠✨  
-**Your Daily Mental Wellness Companion**
+**Your Daily Mental Wellness Companion With An AI That Knows Your Moods And Trends**
 
 Mood Reflect is a minimal, calming app designed to help you track your emotions, reflect on your thoughts, and build healthier habits—all in one place.
+https://youtube.com/shorts/YNYATKidKL8?si=aKTafABjqhXBkJ2f
 
 ---
 
