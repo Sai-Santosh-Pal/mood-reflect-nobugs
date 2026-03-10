@@ -8,9 +8,10 @@ export const darkTheme = {
   colors: {
     ...baseTheme.colors,
     background: '#000000',
+    backgroundLight: '#1C1C1E',
     card: '#1C1C1E',
     text: '#FFFFFF',
     textSecondary: '#EBEBF5',
     border: '#38383A',
   },
-}; 
+};

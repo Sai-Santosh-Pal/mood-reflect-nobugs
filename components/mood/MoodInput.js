@@ -1,9 +1,8 @@
-import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import { MOOD_TYPES } from '../../utils/moodTypes';
-import AuthInput from '../auth/AuthInput';
-import AuthButton from '../auth/AuthButton';
 import { theme } from '../../themes';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function MoodInput({ onSaveMood }) {
   const [moodNote, setMoodNote] = useState('');
@@ -42,27 +41,35 @@ export default function MoodInput({ onSaveMood }) {
             ]}
             onPress={() => setSelectedMood(key)}
           >
-            <Image 
-              source={mood.image} 
-              style={styles.moodImage}
-              resizeMode="contain"
+            <FontAwesome5 
+              name={mood.icon} 
+              size={24} 
+              color={selectedMood === key ? theme.colors.white : theme.colors.tabBarIconInactive}
             />
           </TouchableOpacity>
         ))}
       </View>
-      <AuthInput
-        placeholder="How are you feeling?"
-        value={moodNote}
-        onChangeText={setMoodNote}
-        multiline
-        style={styles.input}
-      />
-      <AuthButton 
-        title="Save Mood" 
-        onPress={handleSave}
-        loading={loading}
-        disabled={!selectedMood}
-      />
+      <View style={styles.inputRow}>
+        <TextInput
+          style={styles.input}
+          placeholder="How are you feeling?"
+          placeholderTextColor={theme.colors.inactive}
+          value={moodNote}
+          onChangeText={setMoodNote}
+          multiline
+        />
+        <TouchableOpacity
+          style={[styles.sendButton, (!selectedMood || !moodNote.trim()) && styles.sendButtonDisabled]}
+          onPress={handleSave}
+          disabled={loading || !selectedMood || !moodNote.trim()}
+        >
+          {loading ? (
+            <ActivityIndicator size="small" color={theme.colors.white} />
+          ) : (
+            <FontAwesome5 name="paper-plane" size={18} color={theme.colors.white} solid />
+          )}
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -70,33 +77,55 @@ export default function MoodInput({ onSaveMood }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    padding: theme.spacing.md,
+    paddingHorizontal: theme.spacing.sm,
+    paddingTop: theme.spacing.sm,
   },
   moodSelector: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.sm,
+    marginHorizontal: theme.spacing.md,
   },
   moodButton: {
-    width: 55,
-    height: 55,
+    width: 50,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 100,
+    borderRadius: 14,
     backgroundColor: theme.colors.card,
-    padding: theme.spacing.sm,
   },
   selectedMood: {
-    backgroundColor: "#FEBE" + "20",
+    backgroundColor: theme.colors.backgroundLight + "20",
     borderWidth: 2,
-    borderColor: "#FEBE",
+    borderColor: theme.colors.backgroundLight,
   },
-  moodImage: {
-    width: 30,
-    height: 30,
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   input: {
-    marginBottom: theme.spacing.md,
-    fontSize: 20,
+    flex: 1,
+    backgroundColor: theme.colors.inputBackground,
+    borderRadius: theme.borderRadius.lg,
+    borderWidth: 1.5,
+    borderColor: theme.colors.borderLight,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.text,
+    minHeight: 48,
   },
-}); 
+  sendButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    backgroundColor: theme.colors.sendButton,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: theme.spacing.sm,
+  },
+  sendButtonDisabled: {
+    opacity: 0.4,
+  },
+});

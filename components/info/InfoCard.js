@@ -21,36 +21,28 @@ export default function InfoCard({ title, description, imageUrl, onPress }) {
 }
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#FFD700",
-    borderRadius: theme.borderRadius.lg,
+    backgroundColor: "#fff",
+    borderRadius: 14,
     width: 250,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     overflow: "hidden",
   },
   image: {
     width: "100%",
-    height: 150,
+    height: 140,
   },
   content: {
-    padding: theme.spacing.md,
+    padding: 14,
   },
   title: {
     fontSize: 16,
     fontFamily: theme.fonts.bold,
-    marginBottom: theme.spacing.xs,
-    color: "#000000",
+    marginBottom: 4,
+    color: "#000",
   },
   description: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: theme.fonts.regular,
-    color: "#000000",
-    opacity: 0.8,
+    color: "#666",
+    lineHeight: 18,
   },
 }); 

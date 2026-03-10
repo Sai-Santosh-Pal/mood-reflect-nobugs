@@ -161,11 +161,6 @@ const styles = StyleSheet.create({
     padding: theme.spacing.md,
     margin: theme.spacing.md,
     borderRadius: theme.borderRadius.lg,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
   newChatText: {
     color: '#FFFFFF',

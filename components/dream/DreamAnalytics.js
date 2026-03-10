@@ -113,7 +113,7 @@ export default function DreamAnalytics({ dreamData }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.chartsContainer}
       >
-        <View style={[styles.chartCard, { width: cardWidth }]}>
+        <View style={[styles.chartCard, { width: cardWidth, marginRight: 16 }]}>
           <Text style={styles.chartTitle}>Dream Type Distribution</Text>
           <View style={styles.chartWrapper}>
             <PieChart
@@ -127,8 +127,18 @@ export default function DreamAnalytics({ dreamData }) {
               accessor="population"
               backgroundColor="transparent"
               paddingLeft="15"
+              center={[cardWidth / 4 - 20, 0]}
               absolute
+              hasLegend={false}
             />
+            <View style={styles.pieLegendContainer}>
+              {pieChartData.map((item, index) => (
+                <View key={index} style={styles.pieLegendItem}>
+                  <View style={[styles.pieLegendDot, { backgroundColor: item.color }]} />
+                  <Text style={styles.pieLegendLabel}>{item.name} ({item.population})</Text>
+                </View>
+              ))}
+            </View>
           </View>
         </View>
 
@@ -175,19 +185,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: theme.spacing.md,
   },
+  chartsContainer: {
+    paddingRight: theme.spacing.md,
+  },
   chartCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.md,
+    borderRadius: 20,
+    padding: 20,
     marginVertical: theme.spacing.sm,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   chartContainer: {
     alignItems: 'center',
@@ -249,14 +254,6 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.md,
     marginVertical: theme.spacing.sm,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   cardTitle: {
     fontSize: 18,
@@ -286,16 +283,16 @@ const styles = StyleSheet.create({
   },
   analysisCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.md,
+    borderRadius: 20,
+    padding: 20,
     marginBottom: theme.spacing.md,
-    shadowColor: theme.colors.shadow,
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
     elevation: 5,
   },
   analysisTitle: {
@@ -329,5 +326,31 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.medium,
     textAlign: 'center',
     marginTop: theme.spacing.sm,
+  },
+  pieLegendContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 12,
+    gap: 8,
+  },
+  pieLegendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+  },
+  pieLegendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 6,
+  },
+  pieLegendLabel: {
+    fontSize: 12,
+    fontFamily: theme.fonts.medium,
+    color: theme.colors.text,
   },
 }); 

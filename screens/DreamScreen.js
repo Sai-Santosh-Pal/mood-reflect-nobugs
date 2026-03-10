@@ -20,9 +20,9 @@ import {
   update,
   remove,
 } from 'firebase/database';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../components/common/Card';
-import Button from '../components/common/Button';
 import AuthInput from '../components/auth/AuthInput';
 import { generateDreamImage } from '../utils/dreamUtils';
 import { theme } from '../themes';
@@ -167,6 +167,54 @@ export default function DreamScreen() {
         data={dreams}
         renderItem={renderDream}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.pageTitle}>Dreams</Text>
+            <View style={styles.overviewCard}>
+              <View style={styles.statsRow}>
+                <View style={styles.statItem}>
+                  <Text style={styles.statValue}>{dreams.length}</Text>
+                  <Text style={styles.statLabel}>Total</Text>
+                </View>
+                <View style={styles.statItem}>
+                  <Text style={[styles.statValue, { color: theme.colors.dreamPositive }]}>
+                    {dreams.filter(d => d.type === 'Lucid Dream' || d.type === 'Vivid Dream').length}
+                  </Text>
+                  <Text style={styles.statLabel}>Positive</Text>
+                </View>
+                <View style={styles.statItem}>
+                  <Text style={[styles.statValue, { color: '#FFA500' }]}>
+                    {dreams.filter(d => d.type === 'Recurring Dream').length}
+                  </Text>
+                  <Text style={styles.statLabel}>Neutral</Text>
+                </View>
+                <View style={styles.statItem}>
+                  <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+                    {dreams.filter(d => d.type === 'Nightmare' || d.type === 'Prophetic Dream').length}
+                  </Text>
+                  <Text style={styles.statLabel}>Negative</Text>
+                </View>
+              </View>
+              {dreams.length > 0 && (
+                <View style={styles.barContainer}>
+                  {(() => {
+                    const positive = dreams.filter(d => d.type === 'Lucid Dream' || d.type === 'Vivid Dream').length;
+                    const neutral = dreams.filter(d => d.type === 'Recurring Dream').length;
+                    const negative = dreams.length - positive - neutral;
+                    return (
+                      <View style={styles.bar}>
+                        {positive > 0 && <View style={[styles.barSegment, { flex: positive, backgroundColor: '#FFD700', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                        {neutral > 0 && <View style={[styles.barSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
+                        {negative > 0 && <View style={[styles.barSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                      </View>
+                    );
+                  })()}
+                </View>
+              )}
+            </View>
+          </>
+        }
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={loadDreams} />
         }
@@ -176,7 +224,7 @@ export default function DreamScreen() {
         style={styles.fab}
         onPress={() => setModalVisible(true)}
       >
-        <MaterialIcons name="add" size={24} color="white" />
+        <FontAwesome5 name="plus" size={20} color="#000" />
       </TouchableOpacity>
 
       <Modal
@@ -185,8 +233,8 @@ export default function DreamScreen() {
         transparent={true}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <Card style={styles.modalContent}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New Dream</Text>
             
             <AuthInput
@@ -202,7 +250,8 @@ export default function DreamScreen() {
               multiline
               numberOfLines={4}
             />
-            
+
+            <Text style={styles.typeLabel}>Dream Type</Text>
             <View style={styles.typeContainer}>
               {Object.entries(DREAM_TYPES).map(([key, value]) => (
                 <TouchableOpacity
@@ -213,23 +262,31 @@ export default function DreamScreen() {
                   ]}
                   onPress={() => setSelectedType(value)}
                 >
-                  <Text style={styles.typeText}>{value}</Text>
+                  <Text style={[
+                    styles.typeText,
+                    selectedType === value && styles.selectedTypeText,
+                  ]}>{value}</Text>
                 </TouchableOpacity>
               ))}
             </View>
 
-            <Button
-              title={generatingImage ? 'Adding Dream...' : 'Add Dream'}
+            <TouchableOpacity
+              style={[styles.addBtn, generatingImage && { opacity: 0.5 }]}
               onPress={handleAddDream}
               disabled={generatingImage}
-            />
+            >
+              <Text style={styles.addBtnText}>
+                {generatingImage ? 'Adding Dream...' : 'Add Dream'}
+              </Text>
+            </TouchableOpacity>
             
-            <Button
-              title="Cancel"
+            <TouchableOpacity
+              style={styles.cancelBtn}
               onPress={() => setModalVisible(false)}
-              type="secondary"
-            />
-          </Card>
+            >
+              <Text style={styles.cancelBtnText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
@@ -239,25 +296,67 @@ export default function DreamScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: "#FEBE",
+  },
+  listContent: {
+    paddingTop: 50,
+    paddingBottom: 100,
+  },
+  pageTitle: {
+    fontSize: 28,
+    fontFamily: theme.fonts.bold,
+    color: "#000",
+    marginLeft: 20,
+    marginBottom: 12,
+  },
+  overviewCard: {
+    backgroundColor: "#fff",
+    marginHorizontal: 16,
+    marginBottom: 10,
+    borderRadius: 14,
+    padding: 16,
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  statItem: {
+    alignItems: "center",
+  },
+  statValue: {
+    fontSize: 26,
+    fontFamily: theme.fonts.bold,
+    color: "#000",
+  },
+  statLabel: {
+    fontSize: 12,
+    fontFamily: theme.fonts.medium,
+    color: "#888",
+    marginTop: 2,
+  },
+  barContainer: {
+    marginTop: 14,
+  },
+  bar: {
+    flexDirection: "row",
+    height: 8,
+    borderRadius: 6,
+    overflow: "hidden",
+    backgroundColor: "#f0f0f0",
+  },
+  barSegment: {
+    height: 8,
   },
   dreamCard: {
     margin: theme.spacing.md,
     backgroundColor: '#fff',
-    borderRadius: 20,
+    borderRadius: 14,
     padding: 0,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.10,
-    shadowRadius: 6,
-    elevation: 4,
   },
   dreamImage: {
     width: '100%',
     height: 180,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
   deleteButton: {
     position: 'absolute',
@@ -266,15 +365,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.12,
-    shadowRadius: 2,
-    elevation: 2,
     zIndex: 2,
   },
   dreamContent: {
-    padding: theme.spacing.lg,
+    padding: 16,
   },
   titleRow: {
     flexDirection: 'row',
@@ -290,69 +384,105 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#FFF9E5',
+    backgroundColor: '#f0f0f0',
     marginVertical: 10,
-    borderRadius: 1,
   },
   dreamType: {
     fontSize: 14,
     color: theme.colors.primary,
     fontFamily: theme.fonts.medium,
-    // marginBottom: theme.spacing.xs,
   },
   dreamDescription: {
-    fontSize: 16,
-    color: theme.colors.text,
+    fontSize: 15,
+    fontFamily: theme.fonts.regular,
+    color: '#444',
+    marginTop: 4,
     marginBottom: theme.spacing.sm,
+    lineHeight: 21,
   },
   timestamp: {
     fontSize: 12,
-    color: theme.colors.textSecondary,
+    fontFamily: theme.fonts.regular,
+    color: '#999',
   },
   fab: {
     position: 'absolute',
-    right: theme.spacing.lg,
-    bottom: theme.spacing.lg,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 30,
-    width: 60,
-    height: 60,
+    right: 24,
+    bottom: 90,
+    backgroundColor: '#FEBE00',
+    borderRadius: 28,
+    width: 56,
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 4,
   },
-  modalContainer: {
+  modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   modalContent: {
-    margin: theme.spacing.lg,
-    padding: theme.spacing.lg,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+    paddingBottom: 40,
   },
   modalTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: theme.fonts.bold,
-    marginBottom: theme.spacing.lg,
+    color: '#000',
+    marginBottom: 20,
     textAlign: 'center',
+  },
+  typeLabel: {
+    fontSize: 14,
+    fontFamily: theme.fonts.semiBold,
+    color: '#000',
+    marginBottom: 8,
   },
   typeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: theme.spacing.xs,
-    marginVertical: theme.spacing.md,
+    gap: 8,
+    marginBottom: 20,
   },
   typeButton: {
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.xs,
-    borderRadius: theme.borderRadius.sm,
-    backgroundColor: theme.colors.card,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: "#FEBE",
   },
   selectedType: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: '#FEBE00',
   },
   typeText: {
-    color: theme.colors.text,
+    fontSize: 13,
+    color: '#444',
     fontFamily: theme.fonts.medium,
+  },
+  selectedTypeText: {
+    color: '#000',
+  },
+  addBtn: {
+    backgroundColor: '#FEBE00',
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  addBtnText: {
+    fontSize: 16,
+    fontFamily: theme.fonts.bold,
+    color: '#000',
+  },
+  cancelBtn: {
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  cancelBtnText: {
+    fontSize: 16,
+    fontFamily: theme.fonts.medium,
+    color: '#999',
   },
 }); 

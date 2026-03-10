@@ -52,7 +52,7 @@ function ChatStack() {
         name="AIChat" 
         component={AIChatScreen}
         options={{
-          title: 'AI Talk',
+          title: 'ReflectX',
           headerStyle: {
             backgroundColor: theme.colors.background,
           },
@@ -165,7 +165,7 @@ export default function TabNavigator() {
               <FontAwesome6
                 name={iconName}
                 size={15}
-                color={focused ? '#fff' : '#555'}
+                color={focused ? theme.colors.white : theme.colors.tabBarIconInactive}
                 solid
               />
             </View>
@@ -181,7 +181,7 @@ export default function TabNavigator() {
           margin: 0,
         },
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: theme.colors.tabBarBackground,
           borderTopWidth: 0,
           width: '80%',
           maxWidth: 400,
@@ -194,7 +194,7 @@ export default function TabNavigator() {
           alignItems: 'stretch',
           paddingHorizontal: 16,
           paddingVertical: 0,
-          shadowColor: '#000',
+          shadowColor: theme.colors.shadow,
           shadowOffset: { width: 0, height: 8 },
           shadowOpacity: 0.12,
           shadowRadius: 20,
@@ -226,7 +226,7 @@ export default function TabNavigator() {
         name="AIChatTab"
         component={ChatStack}
         options={{
-          tabBarLabel: 'AI Talk',
+          tabBarLabel: 'ReflectX',
           headerShown: false,
         }}
       />
@@ -252,12 +252,12 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#ECECEC',
+    backgroundColor: theme.colors.tabBarInactive,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
   },
   circleFocused: {
-    backgroundColor: '#f2ba22',
+    backgroundColor: theme.colors.tabBarActive,
   },
 });

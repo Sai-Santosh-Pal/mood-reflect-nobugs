@@ -17,7 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Markdown from 'react-native-markdown-display';
 import { startGeminiChat, getRemainingTime, getMessageCount } from '../utils/gemini';
 import { auth, database } from '../firebase';
-import { ref, set, push } from 'firebase/database';
+import { ref, set, push, get } from 'firebase/database';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function AIChatScreen() {
@@ -126,9 +126,37 @@ export default function AIChatScreen() {
     }
   };
 
+  const fetchUserData = async () => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) return { moods: [], dreams: [] };
+
+    try {
+      const [moodsSnap, dreamsSnap] = await Promise.all([
+        get(ref(database, `users/${userId}/moods`)),
+        get(ref(database, `users/${userId}/dreams`)),
+      ]);
+
+      const moods = [];
+      if (moodsSnap.exists()) {
+        moodsSnap.forEach(child => moods.push(child.val()));
+      }
+
+      const dreams = [];
+      if (dreamsSnap.exists()) {
+        dreamsSnap.forEach(child => dreams.push(child.val()));
+      }
+
+      return { moods, dreams };
+    } catch (error) {
+      console.error('Error fetching user data for AI context:', error);
+      return { moods: [], dreams: [] };
+    }
+  };
+
   const initializeChat = async () => {
     try {
-      const chat = await startGeminiChat();
+      const { moods, dreams } = await fetchUserData();
+      const chat = await startGeminiChat(moods, dreams);
       chatRef.current = chat;
       setChatInitialized(true);
     } catch (error) {
@@ -318,14 +346,14 @@ export default function AIChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: "#FEBE",
   },
   messagesContainer: {
     flex: 1,
   },
   messagesContent: {
     padding: theme.spacing.md,
-    paddingBottom: 100,
+    paddingBottom: 160,
   },
   messageContentContainer: {
     flexDirection: 'row',
@@ -389,7 +417,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.card,
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
-    paddingBottom: Platform.OS === 'ios' ? 30 : 0,
+    paddingBottom: Platform.OS === 'ios' ? 90 : 80,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -400,7 +428,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 40,
     maxHeight: 100,
-    backgroundColor: theme.colors.background,
+    backgroundColor: "#FEBE",
     borderRadius: theme.borderRadius.lg,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,

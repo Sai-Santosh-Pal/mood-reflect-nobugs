@@ -1,0 +1,106 @@
+{
+  "primary": "#FEBE00",
+  "secondary": "#FEBE00",
+  "background": "#f5f5f5",
+  "backgroundLight": "#FEBE",
+  "card": "#FFFFFF",
+  "text": "#000000",
+  "textSecondary": "#000000",
+  "textMuted": "#888",
+  "textLight": "#666",
+  "textDark": "#444",
+  "success": "#4CAF50",
+  "error": "#FF3B30",
+  "warning": "#FFC107",
+  "inactive": "#8E8E93",
+  "border": "#FEBE00",
+  "borderLight": "#ECECEC",
+  "borderSubtle": "#e0e0e0",
+  "divider": "#f0f0f0",
+  "white": "#FFFFFF",
+  "black": "#000000",
+
+  "inputBackground": "#F7F7F8",
+  "inputFocusedBackground": "#FFFDF5",
+
+  "tabBarBackground": "#FFFFFF",
+  "tabBarInactive": "#ECECEC",
+  "tabBarActive": "#f2ba22",
+  "tabBarIconInactive": "#555",
+
+  "sosRed": "#FF3B30",
+
+  "moodPositive": "#4CAF50",
+  "moodNeutral": "#FFA500",
+  "moodNegative": "#FF4D4D",
+
+  "dreamPositive": "#FFD700",
+  "dreamNeutral": "#FFA500",
+  "dreamNegative": "#FF4D4D",
+
+  "moodVeryHappy": "#FFD700",
+  "moodHappy": "#FEBE00",
+  "moodNeutralType": "#FFA500",
+  "moodSad": "#FF4D4D",
+  "moodVerySad": "#FF0000",
+  "moodDefault": "#FFE4B5",
+
+  "dreamLucid": "#FFD700",
+  "dreamVivid": "#FEBE00",
+  "dreamRecurring": "#FFA500",
+  "dreamNightmare": "#FF4D4D",
+  "dreamProphetic": "#FF0000",
+
+  "chartPositive": "rgba(46, 204, 113, 1)",
+  "chartNeutral": "rgba(241, 196, 15, 1)",
+  "chartNegative": "rgba(231, 76, 60, 1)",
+  "chartBackground": "#ffffff",
+  "chartTrack": "#EFEFEF",
+
+  "riskLow": "#FFD700",
+  "riskModerate": "#FFA500",
+  "riskHigh": "#FF0000",
+
+  "gaugeSegmentLow": "#4CAF50",
+  "gaugeSegmentModerate": "#FFC107",
+  "gaugeSegmentHigh": "#FF5722",
+  "gaugeTrack": "#EFEFEF",
+  "gaugeNeedle": "#444",
+  "gaugeNeedleTip": "#333",
+  "gaugePin": "#555",
+  "gaugePinCenter": "#FFFFFF",
+  "gaugeHub": "#E0E0E0",
+  "gaugeTick": "#BBB",
+
+  "sendButton": "#000000",
+
+  "buttonPrimary": "#007AFF",
+  "buttonPrimaryText": "#FFFFFF",
+
+  "profileStatMoodBg": "#FFF3E0",
+  "profileStatMoodIcon": "#FF9800",
+  "profileStatCalendarBg": "#E8F5E9",
+  "profileStatCalendarIcon": "#4CAF50",
+  "profileMenuEditBg": "#E3F2FD",
+  "profileMenuEditIcon": "#2196F3",
+  "profileMenuPhotoBg": "#F3E5F5",
+  "profileMenuPhotoIcon": "#9C27B0",
+  "profileMenuSignOutBg": "#FFEBEE",
+
+  "overlay": "rgba(0, 0, 0, 0.4)",
+  "overlayDark": "rgba(0,0,0,0.5)",
+  "overlayOnImage": "rgba(0,0,0,0.6)",
+
+  "shadow": "#000000",
+
+  "avatarColors": ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F"],
+
+  "speedometerLabels": [
+    { "color": "#ff2900" },
+    { "color": "#ff5400" },
+    { "color": "#f4ab44" },
+    { "color": "#f2cf1f" },
+    { "color": "#14eb6e" },
+    { "color": "#00ff6b" }
+  ]
+}

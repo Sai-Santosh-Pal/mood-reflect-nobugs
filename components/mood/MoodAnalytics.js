@@ -5,7 +5,7 @@ import { auth, database } from '../../firebase';
 import { ref, get } from 'firebase/database';
 import { theme } from '../../themes';
 import { MOOD_TYPES } from '../../utils/moodTypes';
-import Speedometer from '../common/Speedometer';
+import RiskGauge from '../common/RiskGauge';
 import { getMoodCategoryCount } from '../../utils/moodAnalytics';
 
 const getLevel = (value) => {
@@ -202,7 +202,7 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
                 backgroundColor: theme.colors.card,
                 backgroundGradientFrom: theme.colors.card,
                 backgroundGradientTo: theme.colors.card,
-                color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`, // Gold
+                color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`,
                 labelColor: (opacity = 1) => theme.colors.text,
                 strokeWidth: 2,
                 useShadowColorFromDataset: false,
@@ -211,9 +211,18 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
               accessor="population"
               backgroundColor="transparent"
               paddingLeft="15"
+              center={[cardWidth / 4 - 20, 0]}
               absolute
-              hasLegend={true}
+              hasLegend={false}
             />
+            <View style={styles.pieLegendContainer}>
+              {pieChartData.map((item, index) => (
+                <View key={index} style={styles.pieLegendItem}>
+                  <View style={[styles.pieLegendDot, { backgroundColor: item.color }]} />
+                  <Text style={styles.pieLegendLabel}>{item.name} ({item.population})</Text>
+                </View>
+              ))}
+            </View>
           </View>
         </View>
 
@@ -258,38 +267,11 @@ export default function MoodAnalytics({ moodData, depressionRisk = 0, tips = [] 
       <View style={styles.riskContainer}>
         <Text style={styles.riskTitle}>Depression Risk Assessment</Text>
         <View style={styles.riskWrapper}>
-          <Speedometer 
-            value={Math.round(depressionRisk)}
-            maxValue={100}
-            size={200}
-            outerCircleStyle={{ backgroundColor: "#FFF8DC" }} 
-            labels={[
-              {
-                name: "Low",
-                labelColor: "#FFD700",
-                activeBarColor: "#FFD700"
-              },
-              {
-                name: "Moderate",
-                labelColor: "#FFA500",
-                activeBarColor: "#FFA500"
-              },
-              {
-                name: "High",
-                labelColor: "#FF0000",
-                activeBarColor: "#FF0000"
-              }
-            ]}
-            labelStyle={{
-              color: theme.colors.text,
-              fontSize: 14,
-              display: 'none',
-              fontFamily: theme.fonts.medium,
-            }}
-          />
+          <RiskGauge value={Math.round(depressionRisk)} size={220} />
           <Text style={[styles.riskValue, { color: getRiskColor(depressionRisk) }]}>
             {Math.round(depressionRisk)}%
           </Text>
+          <Text style={styles.riskLevel}>{getLevel(depressionRisk)} Risk</Text>
         </View>
       </View>
 
@@ -338,18 +320,9 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    borderRadius: 16,
-    padding: 16,
-    // marginRight: 16,
+    borderRadius: 20,
+    padding: 20,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     minWidth: 200,
   },
   cardTitle: {
@@ -418,14 +391,6 @@ const styles = StyleSheet.create({
     padding: theme.spacing.md,
     marginTop: 36,
     // marginBottom: theme.spacing.md,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   riskTitle: {
     fontSize: 18,
@@ -437,13 +402,20 @@ const styles = StyleSheet.create({
   riskWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: theme.spacing.md,
   },
   riskValue: {
-    fontSize: 24,
+    fontSize: 32,
     fontFamily: theme.fonts.bold,
-    marginTop: 16,
+    marginTop: 4,
     textAlign: 'center',
-    marginBottom: 24,
+  },
+  riskLevel: {
+    fontSize: 14,
+    fontFamily: theme.fonts.medium,
+    color: theme.colors.textSecondary,
+    marginTop: 2,
+    textAlign: 'center',
   },
   legendContainer: {
     flexDirection: 'row',
@@ -466,5 +438,31 @@ const styles = StyleSheet.create({
   legendText: {
     fontSize: 12,
     color: '#666'
+  },
+  pieLegendContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 12,
+    gap: 8,
+  },
+  pieLegendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+  },
+  pieLegendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 6,
+  },
+  pieLegendLabel: {
+    fontSize: 12,
+    fontFamily: theme.fonts.medium,
+    color: theme.colors.text,
   },
 }); 

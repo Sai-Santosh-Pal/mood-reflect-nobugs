@@ -1,17 +1,7 @@
+import colors from './colors.json';
+
 export const baseTheme = {
-  colors: {
-    primary: "#FEBE00",
-    secondary: "#FEBE00",
-    background: "#f5f5f5",
-    card: "#fff",
-    text: "#000000",
-    textSecondary: "#000000",
-    success: "#4CAF50",
-    error: "#FF3B30",
-    warning: "#FFC107",
-    inactive: "#8E8E93",
-    border: "#FEBE00",
-  },
+  colors,
   spacing: {
     xs: 4,
     sm: 8,
@@ -25,28 +15,6 @@ export const baseTheme = {
     lg: 16,
     xl: 24,
     round: 9999,
-  },
-  shadows: {
-    small: {
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.18,
-      shadowRadius: 1.0,
-      elevation: 1,
-    },
-    medium: {
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
   },
   fonts: {
     thin: "Inter-Thin",
@@ -70,4 +38,4 @@ export const baseTheme = {
     extraBold: "800",
     black: "900",
   },
-}; 
+};

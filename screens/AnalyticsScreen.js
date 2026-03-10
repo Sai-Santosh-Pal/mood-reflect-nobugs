@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+import LottieView from 'lottie-react-native';
 import { auth, database } from '../firebase';
 import { ref, get } from 'firebase/database';
 import MoodAnalytics from '../components/mood/MoodAnalytics';
@@ -25,7 +26,6 @@ export default function AnalyticsScreen() {
         throw new Error('User not authenticated');
       }
 
-      // Load moods with proper reference path
       const moodsRef = ref(database, `users/${userId}/moods`);
       const moodsSnapshot = await get(moodsRef);
       
@@ -36,20 +36,17 @@ export default function AnalyticsScreen() {
           moods.push({
             id: childSnapshot.key,
             ...moodData,
-            timestamp: moodData.timestamp || Date.now() // Fallback if timestamp missing
+            timestamp: moodData.timestamp || Date.now()
           });
         });
         
-        // Sort moods by timestamp
         moods.sort((a, b) => b.timestamp - a.timestamp);
 
-        // Calculate mood distribution
         const moodDistribution = {};
         moods.forEach((mood) => {
           moodDistribution[mood.moodType] = (moodDistribution[mood.moodType] || 0) + 1;
         });
 
-        // Calculate depression risk
         const totalMoods = moods.length;
         const negativeMoods = moods.filter(
           (mood) => mood.moodType === "VERY_SAD" || mood.moodType === "SAD"
@@ -64,7 +61,6 @@ export default function AnalyticsScreen() {
         });
       }
 
-      // Load dreams
       const dreamsRef = ref(database, `users/${auth.currentUser.uid}/dreams`);
       const dreamsSnapshot = await get(dreamsRef);
       
@@ -114,8 +110,13 @@ export default function AnalyticsScreen() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Loading...</Text>
+      <View style={styles.loadingContainer}>
+        <LottieView
+          source={require('../assets/animations/loading.json')}
+          autoPlay
+          loop
+          style={styles.lottie}
+        />
       </View>
     );
   }
@@ -123,6 +124,7 @@ export default function AnalyticsScreen() {
   return (
     <ScrollView 
       style={styles.container}
+      contentContainerStyle={styles.contentContainer}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
@@ -131,6 +133,8 @@ export default function AnalyticsScreen() {
         />
       }
     >
+      <Text style={styles.headerTitle}>Analytics</Text>
+
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={[styles.tab, activeTab === 'moods' && styles.activeTab]}
@@ -166,37 +170,52 @@ export default function AnalyticsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: "#FEBE",
   },
-  loadingText: {
-    fontSize: 16,
+  contentContainer: {
+    paddingBottom: 120,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#FEBE",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lottie: {
+    width: 150,
+    height: 150,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontFamily: theme.fonts.bold,
     color: theme.colors.text,
-    textAlign: 'center',
-    marginTop: 20,
+    marginTop: 52,
+    marginBottom: 16,
+    paddingHorizontal: theme.spacing.md,
   },
   tabContainer: {
     flexDirection: 'row',
-    marginTop: 52,
     marginBottom: 10,
-    paddingHorizontal: theme.spacing.md,
+    marginHorizontal: theme.spacing.md,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 4,
   },
   tab: {
     flex: 1,
-    paddingVertical: theme.spacing.sm,
+    paddingVertical: 10,
     alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
+    borderRadius: 10,
   },
   activeTab: {
-    borderBottomColor: theme.colors.primary,
+    backgroundColor: theme.colors.primary,
   },
   tabText: {
-    fontSize: 16,
-    fontFamily: theme.fonts.medium,
-    color: theme.colors.textSecondary,
+    fontSize: 15,
+    fontFamily: theme.fonts.semiBold,
+    color: '#888',
   },
   activeTabText: {
-    color: theme.colors.primary,
-    fontFamily: theme.fonts.semiBold,
+    color: '#fff',
   },
 });

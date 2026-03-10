@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text,Dimensions, StyleSheet, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, ScrollView, Linking, TouchableOpacity } from 'react-native';
 import { auth, database } from '../firebase';
 import { ref, get } from 'firebase/database';
 import MoodInput from '../components/mood/MoodInput';
@@ -8,16 +8,36 @@ import { useMood } from '../context/MoodContext';
 import { theme } from '../themes';
 import { useNavigation } from '@react-navigation/native';
 import InfoSection from '../components/info/InfoSection';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MOOD_TYPES } from '../utils/moodTypes';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const { refreshAnalytics, loadRecentMoods } = useMood();
+  const { refreshAnalytics, loadRecentMoods, recentMoods } = useMood();
   const [userName, setUserName] = useState('');
+  const [dreamData, setDreamData] = useState([]);
 
   useEffect(() => {
     loadRecentMoods();
     loadUserProfile();
+    loadDreamData();
   }, []);
+
+  const loadDreamData = async () => {
+    try {
+      const dreamsRef = ref(database, `users/${auth.currentUser.uid}/dreams`);
+      const snapshot = await get(dreamsRef);
+      if (snapshot.exists()) {
+        const dreams = [];
+        snapshot.forEach((child) => {
+          dreams.push({ id: child.key, ...child.val() });
+        });
+        setDreamData(dreams);
+      }
+    } catch (error) {
+      console.error('Error loading dreams:', error);
+    }
+  };
 
   const loadUserProfile = async () => {
     try {
@@ -167,7 +187,7 @@ Remember: There's no "right" way to feel during a body scan. Whatever you experi
           shortDescription:
             "Transform everyday activities into powerful mindfulness practices",
           imageUrl:
-            "https://kripalu.org/sites/default/files/Meditation_Ref_GettyImages-658448794.jpg",
+            "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7",
           onPress: (item) => navigation.navigate("InfoDetail", { item }),
           fullDescription: `Integrate mindfulness into your daily life with these practical techniques and exercises:
 
@@ -300,30 +320,128 @@ Remember: Stress management is personal - find what works best for you and make 
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.moodInputContainer}>
-          <Text style={styles.introText}>
-            {`${getGreeting()}, ${userName}`}
-          </Text>
-          <Text style={styles.welcomeText}>How are you feeling today?</Text>
-          <MoodInput onSaveMood={handleSaveMood} />
+        <View style={styles.moodCardWrapper}>
+          <View style={styles.moodInputContainer}>
+            <Text style={styles.introText}>
+              {`${getGreeting()}, ${userName}`}
+            </Text>
+            <Text style={styles.welcomeText}>How are you feeling today?</Text>
+            <MoodInput onSaveMood={handleSaveMood} />
+          </View>
+          <TouchableOpacity 
+            style={styles.sosButton}
+            onPress={handleEmergencyCall}
+          >
+            <FontAwesome5 name="phone-alt" size={18} color="#fff" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity 
-          style={styles.sosButton}
-          onPress={handleEmergencyCall}
-        >
-          <Text style={styles.sosButtonText}>🆘 Emergency SOS</Text>
-        </TouchableOpacity>
-        <View style={styles.columnContainer}>
-          <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('Journal')}>
-            <Text style={styles.columnEmoji}>📝</Text>
-            <Text style={styles.columnTitle}>Journal</Text>
-            <Text style={styles.columnSubtext}>Record your thoughts</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.column} onPress={() => navigation.navigate('Goals')}>
-            <Text style={styles.columnEmoji}>🎯</Text>
-            <Text style={styles.columnTitle}>Goals</Text>
-            <Text style={styles.columnSubtext}>Track your progress</Text>
-          </TouchableOpacity>
+        {/* Overview Header */}
+        <View style={styles.overviewSectionHeader}>
+          <Text style={styles.overviewSectionTitle}>Overview</Text>
+          <View style={styles.overviewNavBtns}>
+            <TouchableOpacity style={styles.quickNavBtn} onPress={() => navigation.navigate('Journal')}>
+              <FontAwesome5 name="book" size={16} color="#fff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickNavBtn} onPress={() => navigation.navigate('Goals')}>
+              <FontAwesome5 name="bullseye" size={16} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Mood Overview */}
+        <View style={styles.overviewCard}>
+          <View style={styles.overviewHeader}>
+            <Text style={styles.overviewTitle}>Mood Overview</Text>
+          </View>
+          <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+              <Text style={styles.statValue}>{recentMoods?.length || 0}</Text>
+              <Text style={styles.statLabel}>Total</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#4CAF50' }]}>
+                {recentMoods?.filter(m => m.moodType === 'VERY_HAPPY' || m.moodType === 'HAPPY').length || 0}
+              </Text>
+              <Text style={styles.statLabel}>Positive</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#FFA500' }]}>
+                {recentMoods?.filter(m => m.moodType === 'NEUTRAL').length || 0}
+              </Text>
+              <Text style={styles.statLabel}>Neutral</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+                {recentMoods?.filter(m => m.moodType === 'SAD' || m.moodType === 'VERY_SAD').length || 0}
+              </Text>
+              <Text style={styles.statLabel}>Negative</Text>
+            </View>
+          </View>
+          {recentMoods?.length > 0 && (
+            <View style={styles.moodBarContainer}>
+              {(() => {
+                const total = recentMoods.length;
+                const positive = recentMoods.filter(m => m.moodType === 'VERY_HAPPY' || m.moodType === 'HAPPY').length;
+                const neutral = recentMoods.filter(m => m.moodType === 'NEUTRAL').length;
+                const negative = total - positive - neutral;
+                return (
+                  <View style={styles.moodBar}>
+                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: '#4CAF50', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
+                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                  </View>
+                );
+              })()}
+            </View>
+          )}
+        </View>
+
+        {/* Dream Overview */}
+        <View style={styles.overviewCard}>
+          <View style={styles.overviewHeader}>
+            <Text style={styles.overviewTitle}>Dream Overview</Text>
+          </View>
+          <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+              <Text style={styles.statValue}>{dreamData.length}</Text>
+              <Text style={styles.statLabel}>Total</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#FFD700' }]}>
+                {dreamData.filter(d => d.type === 'Lucid Dream' || d.type === 'Vivid Dream').length}
+              </Text>
+              <Text style={styles.statLabel}>Positive</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#FFA500' }]}>
+                {dreamData.filter(d => d.type === 'Recurring Dream').length}
+              </Text>
+              <Text style={styles.statLabel}>Neutral</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+                {dreamData.filter(d => d.type === 'Nightmare' || d.type === 'Prophetic Dream').length}
+              </Text>
+              <Text style={styles.statLabel}>Negative</Text>
+            </View>
+          </View>
+          {dreamData.length > 0 && (
+            <View style={styles.moodBarContainer}>
+              {(() => {
+                const total = dreamData.length;
+                const positive = dreamData.filter(d => d.type === 'Lucid Dream' || d.type === 'Vivid Dream').length;
+                const neutral = dreamData.filter(d => d.type === 'Recurring Dream').length;
+                const negative = total - positive - neutral;
+                return (
+                  <View style={styles.moodBar}>
+                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: '#FFD700', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
+                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                  </View>
+                );
+              })()}
+            </View>
+          )}
         </View>
 
         {/* Info Sections */}
@@ -345,15 +463,16 @@ const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 20,
     backgroundColor: "#FEBE",
+  },
+  moodCardWrapper: {
+    marginTop: 50,
+    marginHorizontal: 20,
   },
   moodInputContainer: {
     backgroundColor: "#FEBE00",
-    paddingBlock: 20,
-    borderRadius: 30,
-    marginTop: 50,
-    marginHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 16,
   },
   welcomeText: {
     fontSize: 25,
@@ -367,66 +486,92 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: theme.fonts.regular,
     marginLeft: 20,
+    marginBottom: -2,
   },
   sosButton: {
-    backgroundColor: "#FFD700",
-    padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.lg,
-    marginHorizontal: theme.spacing.md,
-    marginTop: theme.spacing.md,
-    alignItems: "center",
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  sosButtonText: {
-    fontSize: 18,
-    fontFamily: theme.fonts.bold,
-    color: "#000000",
-  },
-  columnContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: theme.spacing.md,
-    marginHorizontal: theme.spacing.sm,
-  },
-  column: {
-    flex: 1,
-    backgroundColor: "#FFD700",
-    padding: theme.spacing.lg,
-    margin: theme.spacing.xs,
-    borderRadius: theme.borderRadius.lg,
+    position: "absolute",
+    top: -12,
+    right: -12,
+    backgroundColor: "#FF3B30",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    minHeight: 120,
+    zIndex: 10,
   },
-  columnEmoji: {
-    fontSize: 32,
-    marginBottom: theme.spacing.sm,
+  overviewCard: {
+    backgroundColor: "#fff",
+    marginHorizontal: 20,
+    marginTop: 14,
+    borderRadius: 14,
+    padding: 16,
   },
-  columnTitle: {
-    fontSize: 20,
+  overviewHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 14,
+  },
+  overviewTitle: {
+    fontSize: 17,
+    fontFamily: theme.fonts.semiBold,
+    color: "#000",
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  statItem: {
+    alignItems: "center",
+  },
+  statValue: {
+    fontSize: 26,
     fontFamily: theme.fonts.bold,
-    color: "#000000",
-    marginBottom: theme.spacing.xs,
+    color: "#000",
   },
-  columnSubtext: {
-    fontSize: 14,
+  statLabel: {
+    fontSize: 12,
     fontFamily: theme.fonts.medium,
-    color: "#000000",
-    textAlign: "center",
+    color: "#888",
+    marginTop: 2,
+  },
+  moodBarContainer: {
+    marginTop: 14,
+  },
+  moodBar: {
+    flexDirection: "row",
+    height: 8,
+    borderRadius: 6,
+    overflow: "hidden",
+    backgroundColor: "#f0f0f0",
+  },
+  moodBarSegment: {
+    height: 8,
+  },
+  overviewSectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 2,
+  },
+  overviewSectionTitle: {
+    fontSize: 22,
+    fontFamily: theme.fonts.bold,
+    color: "#000",
+  },
+  overviewNavBtns: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  quickNavBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#FEBE00",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }); 
