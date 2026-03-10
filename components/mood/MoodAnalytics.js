@@ -20,25 +20,25 @@ const cardWidth = screenWidth * 0.85;
 
 const getMoodColor = (moodType) => {
   const colors = {  
-    VERY_HAPPY: "#FFD700", // Bright Yellow
-    HAPPY: "#FEBE00", // Gold Yellow
-    NEUTRAL: "#FFA500", // Orange
-    SAD: "#FF4D4D", // Light Red
-    VERY_SAD: "#FF0000", // Bright Red
+    VERY_HAPPY: theme.colors.moodVeryHappy,
+    HAPPY: theme.colors.moodHappy,
+    NEUTRAL: theme.colors.moodNeutralType,
+    SAD: theme.colors.moodSad,
+    VERY_SAD: theme.colors.moodVerySad,
   };
-  return colors[moodType] || '#FFE4B5'; // Default: Moccasin
+  return colors[moodType] || theme.colors.moodDefault;
 };
 
 const getRiskColor = (value) => {
-  if (value <= 30) return "#FFD700";  // Gold
-  if (value <= 70) return "#FFA500";  // Goldenrod
-  return "#FF0000";                   // Dark Goldenrod
+  if (value <= 30) return theme.colors.riskLow;
+  if (value <= 70) return theme.colors.riskModerate;
+  return theme.colors.riskHigh;
 };
 
 const chartConfig = {
-  backgroundColor: '#ffffff',
-  backgroundGradientFrom: '#ffffff',
-  backgroundGradientTo: '#ffffff',
+  backgroundColor: theme.colors.chartBackground,
+  backgroundGradientFrom: theme.colors.chartBackground,
+  backgroundGradientTo: theme.colors.chartBackground,
   decimalPlaces: 0,
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 12,
-    color: '#666'
+    color: theme.colors.textLight
   },
   pieLegendContainer: {
     flexDirection: 'row',
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.white,
     borderRadius: 20,
   },
   pieLegendDot: {

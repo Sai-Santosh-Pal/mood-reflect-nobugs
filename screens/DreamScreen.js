@@ -184,13 +184,13 @@ export default function DreamScreen() {
                   <Text style={styles.statLabel}>Positive</Text>
                 </View>
                 <View style={styles.statItem}>
-                  <Text style={[styles.statValue, { color: '#FFA500' }]}>
+                  <Text style={[styles.statValue, { color: theme.colors.dreamNeutral }]}>
                     {dreams.filter(d => d.type === 'Recurring Dream').length}
                   </Text>
                   <Text style={styles.statLabel}>Neutral</Text>
                 </View>
                 <View style={styles.statItem}>
-                  <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+                  <Text style={[styles.statValue, { color: theme.colors.dreamNegative }]}>
                     {dreams.filter(d => d.type === 'Nightmare' || d.type === 'Prophetic Dream').length}
                   </Text>
                   <Text style={styles.statLabel}>Negative</Text>
@@ -204,9 +204,9 @@ export default function DreamScreen() {
                     const negative = dreams.length - positive - neutral;
                     return (
                       <View style={styles.bar}>
-                        {positive > 0 && <View style={[styles.barSegment, { flex: positive, backgroundColor: '#FFD700', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
-                        {neutral > 0 && <View style={[styles.barSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
-                        {negative > 0 && <View style={[styles.barSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                        {positive > 0 && <View style={[styles.barSegment, { flex: positive, backgroundColor: theme.colors.dreamPositive, borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                        {neutral > 0 && <View style={[styles.barSegment, { flex: neutral, backgroundColor: theme.colors.dreamNeutral }]} />}
+                        {negative > 0 && <View style={[styles.barSegment, { flex: negative, backgroundColor: theme.colors.dreamNegative, borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
                       </View>
                     );
                   })()}
@@ -224,7 +224,7 @@ export default function DreamScreen() {
         style={styles.fab}
         onPress={() => setModalVisible(true)}
       >
-        <FontAwesome5 name="plus" size={20} color="#000" />
+        <FontAwesome5 name="plus" size={20} color={theme.colors.black} />
       </TouchableOpacity>
 
       <Modal
@@ -295,8 +295,7 @@ export default function DreamScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   listContent: {
     paddingTop: 50,
@@ -305,12 +304,12 @@ const styles = StyleSheet.create({
   pageTitle: {
     fontSize: 28,
     fontFamily: theme.fonts.bold,
-    color: "#000",
+    color: theme.colors.text,
     marginLeft: 20,
     marginBottom: 12,
   },
   overviewCard: {
-    backgroundColor: "#fff",
+    backgroundColor: theme.colors.card,
     marginHorizontal: 16,
     marginBottom: 10,
     borderRadius: 14,
@@ -326,12 +325,12 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 26,
     fontFamily: theme.fonts.bold,
-    color: "#000",
+    color: theme.colors.text,
   },
   statLabel: {
     fontSize: 12,
     fontFamily: theme.fonts.medium,
-    color: "#888",
+    color: theme.colors.textMuted,
     marginTop: 2,
   },
   barContainer: {
@@ -342,14 +341,14 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 6,
     overflow: "hidden",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: theme.colors.divider,
   },
   barSegment: {
     height: 8,
   },
   dreamCard: {
     margin: theme.spacing.md,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     borderRadius: 14,
     padding: 0,
     overflow: 'hidden',
@@ -362,7 +361,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     right: 12,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.white,
     borderRadius: 16,
     padding: 6,
     zIndex: 2,
@@ -384,7 +383,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: theme.colors.divider,
     marginVertical: 10,
   },
   dreamType: {
@@ -395,7 +394,7 @@ const styles = StyleSheet.create({
   dreamDescription: {
     fontSize: 15,
     fontFamily: theme.fonts.regular,
-    color: '#444',
+    color: theme.colors.textDark,
     marginTop: 4,
     marginBottom: theme.spacing.sm,
     lineHeight: 21,
@@ -403,13 +402,13 @@ const styles = StyleSheet.create({
   timestamp: {
     fontSize: 12,
     fontFamily: theme.fonts.regular,
-    color: '#999',
+    color: theme.colors.textMuted,
   },
   fab: {
     position: 'absolute',
     right: 24,
     bottom: 90,
-    backgroundColor: '#FEBE00',
+    backgroundColor: theme.colors.primary,
     borderRadius: 28,
     width: 56,
     height: 56,
@@ -419,10 +418,10 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: theme.colors.overlay,
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -431,14 +430,14 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 22,
     fontFamily: theme.fonts.bold,
-    color: '#000',
+    color: theme.colors.text,
     marginBottom: 20,
     textAlign: 'center',
   },
   typeLabel: {
     fontSize: 14,
     fontFamily: theme.fonts.semiBold,
-    color: '#000',
+    color: theme.colors.text,
     marginBottom: 8,
   },
   typeContainer: {
@@ -451,21 +450,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   selectedType: {
-    backgroundColor: '#FEBE00',
+    backgroundColor: theme.colors.primary,
   },
   typeText: {
     fontSize: 13,
-    color: '#444',
+    color: theme.colors.textDark,
     fontFamily: theme.fonts.medium,
   },
   selectedTypeText: {
-    color: '#000',
+    color: theme.colors.text,
   },
   addBtn: {
-    backgroundColor: '#FEBE00',
+    backgroundColor: theme.colors.primary,
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
@@ -474,7 +473,7 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 16,
     fontFamily: theme.fonts.bold,
-    color: '#000',
+    color: theme.colors.text,
   },
   cancelBtn: {
     paddingVertical: 14,
@@ -483,6 +482,6 @@ const styles = StyleSheet.create({
   cancelBtnText: {
     fontSize: 16,
     fontFamily: theme.fonts.medium,
-    color: '#999',
+    color: theme.colors.textMuted,
   },
 }); 

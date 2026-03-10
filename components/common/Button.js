@@ -23,7 +23,7 @@ export default function Button({ title, onPress, variant = 'primary', style }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.colors.buttonPrimary,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
   buttonSecondary: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: theme.colors.buttonPrimary,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: theme.colors.buttonPrimaryText,
     fontSize: 16,
     fontWeight: '600',
   },
   buttonTextSecondary: {
-    color: '#007AFF',
+    color: theme.colors.buttonPrimary,
   },
 }); 

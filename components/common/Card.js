@@ -11,7 +11,7 @@ export default function Card({ children, style, onPress }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.card,
     borderRadius: 8,
     padding: 16,
     marginVertical: 8,

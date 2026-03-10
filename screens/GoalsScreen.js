@@ -77,9 +77,9 @@ export default function GoalsScreen() {
           style={styles.checkbox}
         >
           {item.completed ? (
-            <Ionicons name="checkmark-circle" size={24} color="#FFD700" />
+            <Ionicons name="checkmark-circle" size={24} color={theme.colors.dreamPositive} />
           ) : (
-            <Ionicons name="ellipse-outline" size={24} color="#FFD700" />
+            <Ionicons name="ellipse-outline" size={24} color={theme.colors.dreamPositive} />
           )}
         </TouchableOpacity>
         <Text style={[
@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   addButton: {
-    backgroundColor: '#FFD700',
+    backgroundColor: theme.colors.dreamPositive,
     padding: theme.spacing.sm,
     borderRadius: theme.borderRadius.md,
     alignItems: 'center',
     marginTop: theme.spacing.sm,
   },
   addButtonText: {
-    color: '#000000',
+    color: theme.colors.text,
     fontFamily: theme.fonts.bold,
     fontSize: 16,
   },

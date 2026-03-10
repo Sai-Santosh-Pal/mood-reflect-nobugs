@@ -106,7 +106,7 @@ export default function ChatHistoryScreen({ navigation }) {
         style={styles.newChatButton}
         onPress={createNewChat}
       >
-        <Ionicons name="add-circle-outline" size={24} color="#FFFFFF" />
+        <Ionicons name="add-circle-outline" size={24} color={theme.colors.white} />
         <Text style={styles.newChatText}>New Chat</Text>
       </TouchableOpacity>
 
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.lg,
   },
   newChatText: {
-    color: '#FFFFFF',
+    color: theme.colors.white,
     marginLeft: theme.spacing.sm,
     fontFamily: theme.fonts.medium,
     fontSize: 16,

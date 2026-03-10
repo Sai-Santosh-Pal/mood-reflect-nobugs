@@ -332,7 +332,7 @@ Remember: Stress management is personal - find what works best for you and make 
             style={styles.sosButton}
             onPress={handleEmergencyCall}
           >
-            <FontAwesome5 name="phone-alt" size={18} color="#fff" />
+            <FontAwesome5 name="phone-alt" size={18} color={theme.colors.white} />
           </TouchableOpacity>
         </View>
         {/* Overview Header */}
@@ -340,10 +340,10 @@ Remember: Stress management is personal - find what works best for you and make 
           <Text style={styles.overviewSectionTitle}>Overview</Text>
           <View style={styles.overviewNavBtns}>
             <TouchableOpacity style={styles.quickNavBtn} onPress={() => navigation.navigate('Journal')}>
-              <FontAwesome5 name="book" size={16} color="#fff" />
+              <FontAwesome5 name="book" size={16} color={theme.colors.white} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickNavBtn} onPress={() => navigation.navigate('Goals')}>
-              <FontAwesome5 name="bullseye" size={16} color="#fff" />
+              <FontAwesome5 name="bullseye" size={16} color={theme.colors.white} />
             </TouchableOpacity>
           </View>
         </View>
@@ -359,19 +359,19 @@ Remember: Stress management is personal - find what works best for you and make 
               <Text style={styles.statLabel}>Total</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#4CAF50' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.moodPositive }]}>
                 {recentMoods?.filter(m => m.moodType === 'VERY_HAPPY' || m.moodType === 'HAPPY').length || 0}
               </Text>
               <Text style={styles.statLabel}>Positive</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#FFA500' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.moodNeutral }]}>
                 {recentMoods?.filter(m => m.moodType === 'NEUTRAL').length || 0}
               </Text>
               <Text style={styles.statLabel}>Neutral</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.moodNegative }]}>
                 {recentMoods?.filter(m => m.moodType === 'SAD' || m.moodType === 'VERY_SAD').length || 0}
               </Text>
               <Text style={styles.statLabel}>Negative</Text>
@@ -386,9 +386,9 @@ Remember: Stress management is personal - find what works best for you and make 
                 const negative = total - positive - neutral;
                 return (
                   <View style={styles.moodBar}>
-                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: '#4CAF50', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
-                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
-                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: theme.colors.moodPositive, borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: theme.colors.moodNeutral }]} />}
+                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: theme.colors.moodNegative, borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
                   </View>
                 );
               })()}
@@ -407,19 +407,19 @@ Remember: Stress management is personal - find what works best for you and make 
               <Text style={styles.statLabel}>Total</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#FFD700' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.dreamPositive }]}>
                 {dreamData.filter(d => d.type === 'Lucid Dream' || d.type === 'Vivid Dream').length}
               </Text>
               <Text style={styles.statLabel}>Positive</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#FFA500' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.dreamNeutral }]}>
                 {dreamData.filter(d => d.type === 'Recurring Dream').length}
               </Text>
               <Text style={styles.statLabel}>Neutral</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#FF4D4D' }]}>
+              <Text style={[styles.statValue, { color: theme.colors.dreamNegative }]}>
                 {dreamData.filter(d => d.type === 'Nightmare' || d.type === 'Prophetic Dream').length}
               </Text>
               <Text style={styles.statLabel}>Negative</Text>
@@ -434,9 +434,9 @@ Remember: Stress management is personal - find what works best for you and make 
                 const negative = total - positive - neutral;
                 return (
                   <View style={styles.moodBar}>
-                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: '#FFD700', borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
-                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: '#FFA500' }]} />}
-                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: '#FF4D4D', borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
+                    {positive > 0 && <View style={[styles.moodBarSegment, { flex: positive, backgroundColor: theme.colors.dreamPositive, borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }]} />}
+                    {neutral > 0 && <View style={[styles.moodBarSegment, { flex: neutral, backgroundColor: theme.colors.dreamNeutral }]} />}
+                    {negative > 0 && <View style={[styles.moodBarSegment, { flex: negative, backgroundColor: theme.colors.dreamNegative, borderTopRightRadius: 6, borderBottomRightRadius: 6 }]} />}
                   </View>
                 );
               })()}
@@ -463,14 +463,14 @@ const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   moodCardWrapper: {
     marginTop: 50,
     marginHorizontal: 20,
   },
   moodInputContainer: {
-    backgroundColor: "#FEBE00",
+    backgroundColor: theme.colors.primary,
     paddingVertical: 12,
     borderRadius: 16,
   },
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -12,
     right: -12,
-    backgroundColor: "#FF3B30",
+    backgroundColor: theme.colors.sosRed,
     width: 44,
     height: 44,
     borderRadius: 22,
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   overviewCard: {
-    backgroundColor: "#fff",
+    backgroundColor: theme.colors.card,
     marginHorizontal: 20,
     marginTop: 14,
     borderRadius: 14,
@@ -516,7 +516,7 @@ const styles = StyleSheet.create({
   overviewTitle: {
     fontSize: 17,
     fontFamily: theme.fonts.semiBold,
-    color: "#000",
+    color: theme.colors.text,
   },
   statsRow: {
     flexDirection: "row",
@@ -528,12 +528,12 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 26,
     fontFamily: theme.fonts.bold,
-    color: "#000",
+    color: theme.colors.text,
   },
   statLabel: {
     fontSize: 12,
     fontFamily: theme.fonts.medium,
-    color: "#888",
+    color: theme.colors.textMuted,
     marginTop: 2,
   },
   moodBarContainer: {
@@ -544,7 +544,7 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 6,
     overflow: "hidden",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: theme.colors.divider,
   },
   moodBarSegment: {
     height: 8,
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
   overviewSectionTitle: {
     fontSize: 22,
     fontFamily: theme.fonts.bold,
-    color: "#000",
+    color: theme.colors.text,
   },
   overviewNavBtns: {
     flexDirection: "row",
@@ -570,7 +570,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#FEBE00",
+    backgroundColor: theme.colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },

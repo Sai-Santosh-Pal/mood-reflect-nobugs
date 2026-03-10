@@ -8,17 +8,17 @@ const screenWidth = Dimensions.get('window').width;
 const cardWidth = screenWidth * 0.85;
 
 const DREAM_TYPE_COLORS = {
-  "Lucid Dream": "#FFD700", // Fresh Green
-  "Vivid Dream": "#FEBE00", // Bright Blue
-  "Recurring Dream": "#FFA500", // Orange
-  Nightmare: "#FF4D4D", // Red
-  "Prophetic Dream": "#FF0000", // Orange
+  "Lucid Dream": theme.colors.dreamLucid,
+  "Vivid Dream": theme.colors.dreamVivid,
+  "Recurring Dream": theme.colors.dreamRecurring,
+  Nightmare: theme.colors.dreamNightmare,
+  "Prophetic Dream": theme.colors.dreamProphetic,
 };
 
 const chartConfig = {
-  backgroundColor: '#ffffff',
-  backgroundGradientFrom: '#ffffff',
-  backgroundGradientTo: '#ffffff',
+  backgroundColor: theme.colors.chartBackground,
+  backgroundGradientFrom: theme.colors.chartBackground,
+  backgroundGradientTo: theme.colors.chartBackground,
   decimalPlaces: 0,
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     marginBottom: theme.spacing.md,
-    shadowColor: '#000',
+    shadowColor: theme.colors.shadow,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.white,
     borderRadius: 20,
   },
   pieLegendDot: {

@@ -1,6 +1,7 @@
 import { database } from '../firebase';
 import { ref, set, get, update, push, serverTimestamp } from 'firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { theme } from '../themes';
 
 export const saveMoodEntry = async (userId, moodData) => {
   try {
@@ -100,16 +101,16 @@ export const deleteMoodEntry = async (userId, moodId) => {
 export const getMoodColor = (moodType) => {
   switch (moodType) {
     case 'VERY_HAPPY':
-      return '#4CAF50'; // Green
+      return theme.colors.moodVeryHappy;
     case 'HAPPY':
-      return '#8BC34A'; // Light Green
+      return theme.colors.moodHappy;
     case 'NEUTRAL':
-      return '#FFC107'; // Amber
+      return theme.colors.moodNeutralType;
     case 'SAD':
-      return '#FF9800'; // Orange
+      return theme.colors.moodSad;
     case 'VERY_SAD':
-      return '#F44336'; // Red
+      return theme.colors.moodVerySad;
     default:
-      return '#9E9E9E'; // Grey (default)
+      return theme.colors.moodDefault;
   }
 };

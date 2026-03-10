@@ -50,7 +50,7 @@ export default function UsersTab() {
   };
 
   const getAvatarColor = (name) => {
-    const colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F"];
+    const colors = theme.colors.avatarColors || ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F"];
     let hash = 0;
     for (let i = 0; i < (name || "").length; i++) {
       hash = name.charCodeAt(i) + ((hash << 5) - hash);
@@ -129,7 +129,7 @@ export default function UsersTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   listContent: {
     padding: 16,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     marginRight: 14,
   },
   avatarText: {
-    color: "#fff",
+    color: theme.colors.white,
     fontSize: 18,
     fontFamily: theme.fonts.bold,
   },

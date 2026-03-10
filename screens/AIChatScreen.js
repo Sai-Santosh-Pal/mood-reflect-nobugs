@@ -346,7 +346,7 @@ export default function AIChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   messagesContainer: {
     flex: 1,
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 40,
     maxHeight: 100,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
     borderRadius: theme.borderRadius.lg,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,

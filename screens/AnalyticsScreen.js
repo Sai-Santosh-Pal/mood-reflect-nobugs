@@ -170,14 +170,14 @@ export default function AnalyticsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   contentContainer: {
     paddingBottom: 120,
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
     marginHorizontal: theme.spacing.md,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.white,
     borderRadius: 12,
     padding: 4,
   },
@@ -213,9 +213,9 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 15,
     fontFamily: theme.fonts.semiBold,
-    color: '#888',
+    color: theme.colors.textMuted,
   },
   activeTabText: {
-    color: '#fff',
+    color: theme.colors.white,
   },
 });

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import Svg, { Path, Circle, Text as SvgText } from 'react-native-svg';
+import { theme } from '../../themes';
 
 const SEGMENTS = [
-  { color: '#4CAF50', label: 'Low' },
-  { color: '#FFC107', label: 'Moderate' },
-  { color: '#FF5722', label: 'High' },
+  { color: theme.colors.gaugeSegmentLow, label: 'Low' },
+  { color: theme.colors.gaugeSegmentModerate, label: 'Moderate' },
+  { color: theme.colors.gaugeSegmentHigh, label: 'High' },
 ];
 
 function polarToCartesian(cx, cy, r, angleDeg) {
@@ -66,7 +67,7 @@ export default function RiskGauge({ value = 0, size = 220 }) {
         {/* Track background */}
         <Path
           d={describeArc(cx, cy, radius, 180, 360)}
-          stroke="#EFEFEF"
+          stroke={theme.colors.gaugeTrack}
           strokeWidth={arcWidth + 6}
           fill="none"
           strokeLinecap="round"
@@ -97,7 +98,7 @@ export default function RiskGauge({ value = 0, size = 220 }) {
             <Path
               key={tick}
               d={`M ${outer.x} ${outer.y} L ${inner.x} ${inner.y}`}
-              stroke="#BBB"
+              stroke={theme.colors.gaugeTick}
               strokeWidth={1.5}
             />
           );
@@ -124,7 +125,7 @@ export default function RiskGauge({ value = 0, size = 220 }) {
         })}
 
         {/* Hub base */}
-        <Circle cx={cx} cy={cy} r={13} fill="#E0E0E0" />
+        <Circle cx={cx} cy={cy} r={13} fill={theme.colors.gaugeHub} />
       </Svg>
 
       {/* Animated needle — square view centered on hub so rotation pivot = hub */}
@@ -153,13 +154,13 @@ export default function RiskGauge({ value = 0, size = 220 }) {
               L ${nCx + 3.5} ${nCy}
               Z
             `}
-            fill="#444"
+            fill={theme.colors.gaugeNeedle}
           />
           {/* Needle tip */}
-          <Circle cx={nCx} cy={nCy - needleLength + 6} r={2.5} fill="#333" />
+          <Circle cx={nCx} cy={nCy - needleLength + 6} r={2.5} fill={theme.colors.gaugeNeedleTip} />
           {/* Center pin */}
-          <Circle cx={nCx} cy={nCy} r={10} fill="#555" />
-          <Circle cx={nCx} cy={nCy} r={5} fill="#fff" />
+          <Circle cx={nCx} cy={nCy} r={10} fill={theme.colors.gaugePin} />
+          <Circle cx={nCx} cy={nCy} r={5} fill={theme.colors.gaugePinCenter} />
         </Svg>
       </Animated.View>
     </View>

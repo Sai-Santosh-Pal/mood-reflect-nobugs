@@ -412,7 +412,7 @@ export default function PostsTab() {
         onPress={() => setModalVisible(true)}
         activeOpacity={0.8}
       >
-        <MaterialIcons name="edit" size={24} color="#fff" />
+        <MaterialIcons name="edit" size={24} color={theme.colors.white} />
       </TouchableOpacity>
 
       {/* Create Post Modal */}
@@ -502,7 +502,7 @@ export default function PostsTab() {
                       setNewPost((prev) => ({ ...prev, imageUrl: null }))
                     }
                   >
-                    <MaterialIcons name="close" size={18} color="#fff" />
+                    <MaterialIcons name="close" size={18} color={theme.colors.white} />
                   </TouchableOpacity>
                 </View>
               )
@@ -588,7 +588,7 @@ export default function PostsTab() {
                 onPress={handleComment}
                 disabled={!newComment.trim()}
               >
-                <Ionicons name="send" size={20} color="#fff" />
+                <Ionicons name="send" size={20} color={theme.colors.white} />
               </TouchableOpacity>
             </View>
           </View>
@@ -601,14 +601,14 @@ export default function PostsTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
     paddingTop: 50,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
   },
   loadingAnimation: {
     width: 200,
@@ -673,7 +673,7 @@ const styles = StyleSheet.create({
     marginRight: theme.spacing.sm,
   },
   avatarText: {
-    color: "#fff",
+    color: theme.colors.white,
     fontSize: 16,
     fontFamily: theme.fonts.bold,
   },
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
     marginBottom: theme.spacing.sm,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: theme.colors.divider,
     borderRadius: theme.borderRadius.md,
     overflow: "hidden",
   },
@@ -735,7 +735,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingTop: theme.spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: "#f0f0f0",
+    borderTopColor: theme.colors.divider,
   },
   interactionButton: {
     flexDirection: "row",
@@ -765,7 +765,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: theme.colors.overlayDark,
   },
   modalContent: {
     backgroundColor: theme.colors.card,
@@ -781,7 +781,7 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
     paddingBottom: theme.spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
+    borderBottomColor: theme.colors.divider,
   },
   modalTitle: {
     fontSize: 18,
@@ -809,7 +809,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: theme.borderRadius.round,
     borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderColor: theme.colors.borderSubtle,
     margin: 3,
   },
   tagButtonSelected: {
@@ -822,7 +822,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   tagButtonTextSelected: {
-    color: "#fff",
+    color: theme.colors.white,
   },
   imagePickerButton: {
     flexDirection: "row",
@@ -831,7 +831,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.md,
     borderRadius: theme.borderRadius.md,
     borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderColor: theme.colors.borderSubtle,
     borderStyle: "dashed",
     marginBottom: theme.spacing.sm,
   },
@@ -866,7 +866,7 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FEBE",
+    backgroundColor: theme.colors.backgroundLight,
     borderRadius: theme.borderRadius.md,
     marginBottom: theme.spacing.sm,
   },
@@ -900,7 +900,7 @@ const styles = StyleSheet.create({
   commentContainer: {
     paddingVertical: theme.spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
+    borderBottomColor: theme.colors.divider,
   },
   commentRow: {
     flexDirection: "row",
@@ -916,7 +916,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   commentAvatarText: {
-    color: "#fff",
+    color: theme.colors.white,
     fontSize: 12,
     fontFamily: theme.fonts.bold,
   },
@@ -957,7 +957,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing.md,
     paddingTop: theme.spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: "#f0f0f0",
+    borderTopColor: theme.colors.divider,
   },
   commentTextInput: {
     flex: 1,
@@ -972,6 +972,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   sendButtonDisabled: {
-    backgroundColor: "#e0e0e0",
+    backgroundColor: theme.colors.borderSubtle,
   },
 });

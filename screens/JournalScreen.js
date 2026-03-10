@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   addButton: {
-    backgroundColor: '#FFD700',
+    backgroundColor: theme.colors.dreamPositive,
     padding: theme.spacing.sm,
     borderRadius: theme.borderRadius.md,
     alignItems: 'center',
     marginTop: theme.spacing.sm,
   },
   addButtonText: {
-    color: '#000000',
+    color: theme.colors.text,
     fontFamily: theme.fonts.bold,
     fontSize: 16,
   },

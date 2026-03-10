@@ -17,7 +17,7 @@ export default function AuthButton({ title, onPress, loading = false, variant = 
       activeOpacity={0.8}
     >
       {loading ? (
-        <ActivityIndicator color={isPrimary ? '#fff' : theme.colors.primary} size="small" />
+        <ActivityIndicator color={isPrimary ? theme.colors.white : theme.colors.primary} size="small" />
       ) : (
         <Text style={[styles.buttonText, isPrimary ? styles.primaryText : styles.secondaryText]}>
           {title}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   primaryText: {
-    color: '#fff',
+    color: theme.colors.white,
   },
   secondaryText: {
     color: theme.colors.primary,

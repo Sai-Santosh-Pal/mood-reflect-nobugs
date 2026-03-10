@@ -156,7 +156,7 @@ export default function ProfileScreen() {
               </View>
             )}
             <View style={styles.cameraButton}>
-              <Ionicons name="camera" size={16} color="#fff" />
+              <Ionicons name="camera" size={16} color={theme.colors.white} />
             </View>
           </View>
         </TouchableOpacity>
@@ -181,15 +181,15 @@ export default function ProfileScreen() {
       {/* Stats cards */}
       <View style={styles.statsRow}>
         <View style={styles.statCard}>
-          <View style={[styles.statIconBg, { backgroundColor: "#FFF3E0" }]}>
-            <Ionicons name="happy" size={22} color="#FF9800" />
+          <View style={[styles.statIconBg, { backgroundColor: theme.colors.profileStatMoodBg }]}>
+            <Ionicons name="happy" size={22} color={theme.colors.profileStatMoodIcon} />
           </View>
           <Text style={styles.statValue}>{profile.totalMoods || 0}</Text>
           <Text style={styles.statLabel}>Moods Logged</Text>
         </View>
         <View style={styles.statCard}>
-          <View style={[styles.statIconBg, { backgroundColor: "#E8F5E9" }]}>
-            <Ionicons name="calendar" size={22} color="#4CAF50" />
+          <View style={[styles.statIconBg, { backgroundColor: theme.colors.profileStatCalendarBg }]}>
+            <Ionicons name="calendar" size={22} color={theme.colors.profileStatCalendarIcon} />
           </View>
           <Text style={styles.statValue}>{getMemberSince(profile.joinedDate)}</Text>
           <Text style={styles.statLabel}>Member Since</Text>
@@ -204,8 +204,8 @@ export default function ProfileScreen() {
           style={styles.menuItem}
           onPress={() => setIsEditing(true)}
         >
-          <View style={[styles.menuIconBg, { backgroundColor: "#E3F2FD" }]}>
-            <Ionicons name="person-outline" size={20} color="#2196F3" />
+          <View style={[styles.menuIconBg, { backgroundColor: theme.colors.profileMenuEditBg }]}>
+            <Ionicons name="person-outline" size={20} color={theme.colors.profileMenuEditIcon} />
           </View>
           <View style={styles.menuItemContent}>
             <Text style={styles.menuItemTitle}>Edit Profile</Text>
@@ -218,8 +218,8 @@ export default function ProfileScreen() {
           style={styles.menuItem}
           onPress={handleImagePick}
         >
-          <View style={[styles.menuIconBg, { backgroundColor: "#F3E5F5" }]}>
-            <Ionicons name="image-outline" size={20} color="#9C27B0" />
+          <View style={[styles.menuIconBg, { backgroundColor: theme.colors.profileMenuPhotoBg }]}>
+            <Ionicons name="image-outline" size={20} color={theme.colors.profileMenuPhotoIcon} />
           </View>
           <View style={styles.menuItemContent}>
             <Text style={styles.menuItemTitle}>Change Photo</Text>
@@ -234,7 +234,7 @@ export default function ProfileScreen() {
           style={styles.signOutItem}
           onPress={handleSignOut}
         >
-          <View style={[styles.menuIconBg, { backgroundColor: "#FFEBEE" }]}>
+          <View style={[styles.menuIconBg, { backgroundColor: theme.colors.profileMenuSignOutBg }]}>
             <Ionicons name="log-out-outline" size={20} color={theme.colors.error} />
           </View>
           <Text style={styles.signOutText}>Sign Out</Text>
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   avatarInitials: {
     fontSize: 36,
     fontFamily: theme.fonts.bold,
-    color: "#fff",
+    color: theme.colors.white,
   },
   cameraButton: {
     position: "absolute",
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#f5f5f5",
+    borderBottomColor: theme.colors.background,
   },
   menuIconBg: {
     width: 36,
